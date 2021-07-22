@@ -11,31 +11,30 @@
 #   include <boost/qvm/quat_operations.hpp>
 #   include <boost/qvm/vec.hpp>
 #   include <boost/qvm/quat_vec_operations.hpp>
-#   include <boost/qvm/swizzle3.hpp>
 #endif
 
 #include <boost/core/lightweight_test.hpp>
 
 template <class T>
 struct
-Wrap
+wrap
     {
     T t;
-    Wrap() { }
-    Wrap(T t):t(t) { }
+    wrap() { }
+    wrap(T t):t(t) { }
     };
 
 template <class S, class T>
-Wrap<T>
-operator*(S s, Wrap<T> w)
+wrap<T>
+operator*(S s, wrap<T> w)
     {
-    return Wrap<T>(s * w.t);
+    return wrap<T>(s * w.t);
     }
 
 template <class T>
-Wrap<T> operator+(Wrap<T> a, Wrap<T> b)
+wrap<T> operator+(wrap<T> a, wrap<T> b)
     {
-    return Wrap<T>(a.t + b.t);
+    return wrap<T>(a.t + b.t);
     }
 
 namespace
@@ -46,15 +45,15 @@ boost
         {
         template <class T>
         struct
-        is_scalar<Wrap<T> >
+        is_scalar<wrap<T> >
             {
             static bool const value=true;
             };
         template <class S, class T>
         struct
-        deduce_scalar<S, Wrap<T> >
+        deduce_scalar<S, wrap<T> >
             {
-                typedef Wrap<typename deduce_scalar<S, T>::type> type;
+            typedef wrap<typename deduce_scalar<S, T>::type> type;
             };
         }
     }
@@ -64,8 +63,11 @@ main()
     {
     using namespace boost::qvm;
     quat<double> q = rotz_quat(3.14159);
-    vec<Wrap<double>, 3> v = X00(Wrap<double>(1.0));
-    vec<Wrap<double>, 3> r = q * v;
+    vec<wrap<double>, 3> v;
+    v.a[0] = wrap<double>(1.0);
+    v.a[1] = wrap<double>(0);
+    v.a[2] = wrap<double>(0);
+    vec<wrap<double>, 3> r = q * v;
     BOOST_TEST_LT(fabs(r.a[0].t+1), 0.0001);
     BOOST_TEST_LT(fabs(r.a[1].t), 0.0001);
     BOOST_TEST_LT(fabs(r.a[2].t), 0.0001);
