@@ -32,3 +32,11 @@
 #ifndef BOOST_QVM_INLINE_RECURSION
 #define BOOST_QVM_INLINE_RECURSION BOOST_QVM_INLINE_OPERATIONS
 #endif
+
+#ifndef BOOST_QVM_CONSTEXPR
+#   if __cplusplus > 201402L
+#       define BOOST_QVM_CONSTEXPR constexpr
+#   else
+#       define BOOST_QVM_CONSTEXPR
+#   endif
+#endif
