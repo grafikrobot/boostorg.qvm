@@ -40,7 +40,7 @@ jobs:
       - name: Generate single header
         run: |
           REF=$(git show-ref $GITHUB_REF --hash)
-         cd ../boost-root/libs/qvm
+          cd ../boost-root/libs/qvm
           python gen/generate_single_header.py -i include/boost/qvm/all.hpp -p include -o doc/html/qvm.hpp boost/qvm --hash "$REF"
           python gen/generate_single_header.py -i include/boost/qvm/lite.hpp -p include -o doc/html/qvm_lite.hpp boost/qvm --hash "$REF"
 
