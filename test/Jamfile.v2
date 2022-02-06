@@ -39,6 +39,7 @@ run math_test.cpp ;
 
 run mat_traits_array_test.cpp ;
 run vec_traits_array_test.cpp ;
+run vec_traits_std_array_test.cpp ;
 run quat_traits_array_test.cpp ;
 
 run access_m_test.cpp ;
