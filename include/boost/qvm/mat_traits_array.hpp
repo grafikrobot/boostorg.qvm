@@ -8,7 +8,6 @@
 
 #include <boost/qvm/inline.hpp>
 #include <boost/qvm/deduce_mat.hpp>
-#include <boost/qvm/detail/remove_const.hpp>
 #include <boost/qvm/assert.hpp>
 
 namespace boost { namespace qvm {
@@ -27,7 +26,7 @@ struct
 mat_traits<T[Rows][Cols]>
     {
     typedef T this_matrix[Rows][Cols];
-    typedef typename qvm_detail::remove_const<T>::type scalar_type;
+    typedef T scalar_type;
     static int const rows=Rows;
     static int const cols=Cols;
 

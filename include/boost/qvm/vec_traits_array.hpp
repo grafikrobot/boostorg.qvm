@@ -8,7 +8,6 @@
 
 #include <boost/qvm/inline.hpp>
 #include <boost/qvm/deduce_vec.hpp>
-#include <boost/qvm/detail/remove_const.hpp>
 #include <boost/qvm/assert.hpp>
 
 #if __cplusplus > 199711L
@@ -22,7 +21,7 @@ struct
 vec_traits<std::array<T, Dim> >
     {
     using this_vector = std::array<T, Dim>;
-    typedef typename qvm_detail::remove_const<T>::type scalar_type;
+    typedef T scalar_type;
     static int const dim=Dim;
 
     template <int I>
@@ -72,8 +71,8 @@ template <class T,int Dim>
 struct
 vec_traits<std::array<T, Dim> const>
     {
-    using this_vector = std::array<T, Dim> const;
-    typedef typename qvm_detail::remove_const<T>::type scalar_type;
+    typedef std::array<T, Dim> const this_vector;
+    typedef T scalar_type;
     static int const dim=Dim;
 
     template <int I>
@@ -159,7 +158,7 @@ struct
 vec_traits<T[Dim]>
     {
     typedef T this_vector[Dim];
-    typedef typename qvm_detail::remove_const<T>::type scalar_type;
+    typedef T scalar_type;
     static int const dim=Dim;
 
     template <int I>

@@ -47,9 +47,9 @@ main()
         BOOST_QVM_STATIC_ASSERT((vec_traits<std::array<int,3> const>::dim==3));
         BOOST_QVM_STATIC_ASSERT((vec_traits<std::array<int const,3> const>::dim==3));
         same_type<vec_traits<std::array<int,3>>::scalar_type,int>();
-        same_type<vec_traits<std::array<int const,3>>::scalar_type,int>();
+        same_type<vec_traits<std::array<int const,3>>::scalar_type,int const>();
         same_type<vec_traits<std::array<int,3> const>::scalar_type,int>();
-        same_type<vec_traits<std::array<int const,3> const>::scalar_type,int>();
+        same_type<vec_traits<std::array<int const,3> const>::scalar_type,int const>();
         same_type< vec<int,3>, deduce_vec<std::array<int,3>>::type >();
         same_type< vec<int const,3>, deduce_vec<std::array<int const,3>>::type >();
         same_type< vec<int,3>, deduce_vec<std::array<int,3> const>::type >();

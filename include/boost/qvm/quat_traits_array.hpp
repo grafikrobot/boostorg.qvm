@@ -8,7 +8,6 @@
 
 #include <boost/qvm/inline.hpp>
 #include <boost/qvm/deduce_quat.hpp>
-#include <boost/qvm/detail/remove_const.hpp>
 #include <boost/qvm/assert.hpp>
 
 namespace boost { namespace qvm {
@@ -49,7 +48,7 @@ struct
 quat_traits<T[4]>
     {
     typedef T this_quaternion[4];
-    typedef typename qvm_detail::remove_const<T>::type scalar_type;
+    typedef T scalar_type;
 
     template <int I>
     static
