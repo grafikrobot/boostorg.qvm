@@ -41,9 +41,9 @@ operator*( A const & a, B const & b )
     TB const by = vec_traits<B>::template read_element<1>(b);
     TB const bz = vec_traits<B>::template read_element<2>(b);
     R r;
-    vec_traits<R>::template write_element<0>(r) = 2*((t8+t10)*bx + (t6-t4)*by + (t3+t7)*bz) + bx;
-    vec_traits<R>::template write_element<1>(r) = 2*((t4+t6)*bx + (t5+t10)*by + (t9-t2)*bz) + by;
-    vec_traits<R>::template write_element<2>(r) = 2*((t7-t3)*bx + (t2+t9)*by + (t5+t8)*bz) + bz;
+    write_vector_element<0>(r, 2*((t8+t10)*bx + (t6-t4)*by + (t3+t7)*bz) + bx);
+    write_vector_element<1>(r, 2*((t4+t6)*bx + (t5+t10)*by + (t9-t2)*bz) + by);
+    write_vector_element<2>(r, 2*((t7-t3)*bx + (t2+t9)*by + (t5+t8)*bz) + bz);
     return r;
     }
 

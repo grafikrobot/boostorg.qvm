@@ -752,14 +752,14 @@ namespace
             ;
         for( int i=0; i!=r; ++i )
             {
-            g<<TAB1 "vec_traits<R>::template write_element<"<<i<<">(r)=";
+            g<<TAB1 "write_vector_element<"<<i<<">(r,";
             for( int j=0; j!=c; ++j )
                 {
                 if( j )
                     g<<'+';
                 g<<'a'<<i<<j<<"*b"<<j;
                 }
-            g<<";" NL;
+            g<<");" NL;
             }
         g<<
             TAB1 "return r;" NL
@@ -797,14 +797,14 @@ namespace
             ;
         for( int i=0; i!=c; ++i )
             {
-            g<<TAB1 "vec_traits<R>::template write_element<"<<i<<">(r)=";
+            g<<TAB1 "write_vector_element<"<<i<<">(r,";
             for( int j=0; j!=r; ++j )
                 {
                 if( j )
                     g<<'+';
                 g<<'a'<<j<<"*b"<<j<<i;
                 }
-            g<<";" NL;
+            g<<");" NL;
             }
         g<<
             TAB1 "return r;" NL
@@ -827,7 +827,7 @@ namespace
             TAB1 "R r;" NL
             ;
         for( int i=0; i!=d; ++i )
-            g<<TAB1 "vec_traits<R>::template write_element<"<<i<<">(r)=vec_traits<A>::template read_element<"<<i<<">(a)"<<op<<"vec_traits<B>::template read_element<"<<i<<">(b);" NL;
+            g<<TAB1 "write_vector_element<"<<i<<">(r,vec_traits<A>::template read_element<"<<i<<">(a)"<<op<<"vec_traits<B>::template read_element<"<<i<<">(b));" NL;
         g<<
             TAB1 "return r;" NL
             TAB1 "}" NL
@@ -964,7 +964,7 @@ namespace
         std::ostream & g=out.stream();
         g<<TAB1 "{" NL;
         for( int i=0; i!=d; ++i )
-            g<<TAB1 "vec_traits<A>::template write_element<"<<i<<">(a)"<<op<<"vec_traits<B>::template read_element<"<<i<<">(b);" NL;
+            g<<TAB1 "write_vector_element<"<<i<<">(a,vec_traits<A>::template read_element<"<<i<<">(a)"<<op<<"vec_traits<B>::template read_element<"<<i<<">(b));" NL;
         g<<
             TAB1 "return a;" NL
             TAB1 "}" NL
@@ -1007,7 +1007,7 @@ namespace
             TAB1 "R r;" NL
             ;
         for( int i=0; i!=d; ++i )
-            g<<TAB1 "vec_traits<R>::template write_element<"<<i<<">(r)="<<op<<"vec_traits<A>::template read_element<"<<i<<">(a);" NL;
+            g<<TAB1 "write_vector_element<"<<i<<">(r,"<<op<<"vec_traits<A>::template read_element<"<<i<<">(a));" NL;
         g<<
             TAB1 "return r;" NL
             TAB1 "}" NL
@@ -1074,7 +1074,7 @@ namespace
             TAB1 "R r;" NL
             ;
         for( int i=0; i!=d; ++i )
-            g<<TAB1 "vec_traits<R>::template write_element<"<<i<<">(r)=vec_traits<A>::template read_element<"<<i<<">(a)"<<op<<"b;" NL;
+            g<<TAB1 "write_vector_element<"<<i<<">(r,vec_traits<A>::template read_element<"<<i<<">(a)"<<op<<"b);" NL;
         g<<
             TAB1 "return r;" NL
             TAB1 "}" NL
@@ -1095,7 +1095,7 @@ namespace
             TAB1 "R r;" NL
             ;
         for( int i=0; i!=d; ++i )
-            g<<TAB1 "vec_traits<R>::template write_element<"<<i<<">(r)=a"<<op<<"vec_traits<B>::template read_element<"<<i<<">(b);" NL;
+            g<<TAB1 "write_vector_element<"<<i<<">(r,a"<<op<<"vec_traits<B>::template read_element<"<<i<<">(b));" NL;
         g<<
             TAB1 "return r;" NL
             TAB1 "}" NL
@@ -1132,7 +1132,7 @@ namespace
             TAB1 "{" NL
             ;
         for( int i=0; i!=d; ++i )
-            g<<TAB1 "vec_traits<A>::template write_element<"<<i<<">(a)"<<op<<"b;" NL;
+            g<<TAB1 "write_vector_element<"<<i<<">(a, vec_traits<A>::template read_element<"<<i<<">(a)"<<op<<"b);" NL;
         g<<
             TAB1 "return a;" NL
             TAB1 "}" NL
@@ -1169,7 +1169,7 @@ namespace
         std::ostream & g=out.stream();
         g<<TAB1 "{" NL;
         for( int i=0; i!=d; ++i )
-            g<<TAB1 "vec_traits<A>::template write_element<"<<i<<">(a)=vec_traits<B>::template read_element<"<<i<<">(b);" NL;
+            g<<TAB1 "write_vector_element<"<<i<<">(a,vec_traits<B>::template read_element<"<<i<<">(b));" NL;
         g<<
             TAB1 "return a;" NL
             TAB1 "}" NL
@@ -1274,7 +1274,7 @@ namespace
             TAB1 "R r;" NL
             ;
         for( int i=0; i!=d; ++i )
-            g<<TAB1 "vec_traits<R>::template write_element<"<<i<<">(r)=vec_traits<A>::template read_element<"<<i<<">(a);" NL;
+            g<<TAB1 "write_vector_element<"<<i<<">(r,vec_traits<A>::template read_element<"<<i<<">(a));" NL;
         g<<
             TAB1 "return r;" NL
             TAB1 "}" NL
@@ -1502,7 +1502,7 @@ namespace
             TAB1 "R r;" NL
             ;
         for( int i=0; i!=d; ++i )
-            g<<TAB1 "vec_traits<R>::template write_element<"<<i<<">(r)=a"<<i<<"*rm;" NL;
+            g<<TAB1 "write_vector_element<"<<i<<">(r,a"<<i<<"*rm);" NL;
         g<<
             TAB1 "return r;" NL
             TAB1 "}" NL
@@ -1538,7 +1538,7 @@ namespace
             TAB1 "T const rm=scalar_traits<T>::value(1)/sqrt(m2);" NL
             ;
         for( int i=0; i!=d; ++i )
-            g<<TAB1 "vec_traits<A>::template write_element<"<<i<<">(a)*=rm;" NL;
+            g<<TAB1 "write_vector_element<"<<i<<">(a,vec_traits<A>::template read_element<"<<i<<">(a)*rm);" NL;
         g<<TAB1 "}" NL;
         defined(g,d,"normalize",suffix);
         }
@@ -1826,13 +1826,13 @@ namespace
                 }
             vr_op_va_vb_same_size(f,d,"operator+","+","vv");
             vr_op_va_vb_same_size(f,d,"operator-","-","vv");
-            va_op_va_vb_same_size(f,d,"operator+=","+=","vv");
-            va_op_va_vb_same_size(f,d,"operator-=","-=","vv");
+            va_op_va_vb_same_size(f,d,"operator+=","+","vv");
+            va_op_va_vb_same_size(f,d,"operator-=","-","vv");
             vr_op_va_sb(f,d,"operator*","*","vs");
             vr_op_sa_vb(f,d,"operator*","*","sv");
-            va_op_va_sb(f,d,"operator*=","*=","vs");
+            va_op_va_sb(f,d,"operator*=","*","vs");
             vr_op_va_sb(f,d,"operator/","/","vs");
-            va_op_va_sb(f,d,"operator/=","/=","vs");
+            va_op_va_sb(f,d,"operator/=","/","vs");
             vr_convert_to_va(f,d,"v");
             bool_eq_va_vb(f,d,"vv");
             bool_neq_va_vb(f,d,"vv");

@@ -1424,15 +1424,15 @@ axis_angle( A const & a, B & b )
         }
     if( T s=sqrt(1-a0*a0) )
         {
-        vec_traits<B>::template write_element<0>(b) = a1/s;
-        vec_traits<B>::template write_element<1>(b) = a2/s;
-        vec_traits<B>::template write_element<2>(b) = a3/s;
+        write_vector_element<0>(b, a1/s);
+        write_vector_element<1>(b, a2/s);
+        write_vector_element<2>(b, a3/s);
         }
     else
         {
         typedef typename vec_traits<B>::scalar_type U;
-        vec_traits<B>::template write_element<0>(b) = scalar_traits<U>::value(1);
-        vec_traits<B>::template write_element<1>(b) = vec_traits<B>::template write_element<2>(b) = scalar_traits<U>::value(0);
+        write_vector_element<0>(b, scalar_traits<U>::value(1));
+        write_vector_element<1>(b, vec_traits<B>::template write_element<2>(b) = scalar_traits<U>::value(0));
         }
     return scalar_traits<T>::value(2) * qvm::acos(a0);
     }

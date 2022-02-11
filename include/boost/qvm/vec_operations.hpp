@@ -126,15 +126,15 @@ cross( A const & a, B const & b )
     {
     typedef typename deduce_vec2<A,B,3>::type R;
     R r;
-    vec_traits<R>::template write_element<0>(r)=
+    write_vector_element<0>(r,
         vec_traits<A>::template read_element<1>(a)*vec_traits<B>::template read_element<2>(b)-
-        vec_traits<A>::template read_element<2>(a)*vec_traits<B>::template read_element<1>(b);
-    vec_traits<R>::template write_element<1>(r)=
+        vec_traits<A>::template read_element<2>(a)*vec_traits<B>::template read_element<1>(b));
+    write_vector_element<1>(r,
         vec_traits<A>::template read_element<2>(a)*vec_traits<B>::template read_element<0>(b)-
-        vec_traits<A>::template read_element<0>(a)*vec_traits<B>::template read_element<2>(b);
-    vec_traits<R>::template write_element<2>(r)=
+        vec_traits<A>::template read_element<0>(a)*vec_traits<B>::template read_element<2>(b));
+    write_vector_element<2>(r,
         vec_traits<A>::template read_element<0>(a)*vec_traits<B>::template read_element<1>(b)-
-        vec_traits<A>::template read_element<1>(a)*vec_traits<B>::template read_element<0>(b);
+        vec_traits<A>::template read_element<1>(a)*vec_traits<B>::template read_element<0>(b));
     return r;
     }
 

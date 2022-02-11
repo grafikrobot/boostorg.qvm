@@ -21,8 +21,8 @@ typename enable_if_c<
     A &>::type
 assign( A & a, B const & b )
     {
-    vec_traits<A>::template write_element<0>(a)=vec_traits<B>::template read_element<0>(b);
-    vec_traits<A>::template write_element<1>(a)=vec_traits<B>::template read_element<1>(b);
+    write_vector_element<0>(a,vec_traits<B>::template read_element<0>(b));
+    write_vector_element<1>(a,vec_traits<B>::template read_element<1>(b));
     return a;
     }
 

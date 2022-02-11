@@ -35,8 +35,8 @@ operator*( A const & a, B const & b )
     typedef typename deduce_vec2<A,B,2>::type R;
     BOOST_QVM_STATIC_ASSERT(vec_traits<R>::dim==2);
     R r;
-    vec_traits<R>::template write_element<0>(r)=a00*b0+a01*b1;
-    vec_traits<R>::template write_element<1>(r)=a10*b0+a11*b1;
+    write_vector_element<0>(r,a00*b0+a01*b1);
+    write_vector_element<1>(r,a10*b0+a11*b1);
     return r;
     }
 
@@ -79,8 +79,8 @@ operator*( A const & a, B const & b )
     typedef typename deduce_vec2<A,B,2>::type R;
     BOOST_QVM_STATIC_ASSERT(vec_traits<R>::dim==2);
     R r;
-    vec_traits<R>::template write_element<0>(r)=a0*b00+a1*b10;
-    vec_traits<R>::template write_element<1>(r)=a0*b01+a1*b11;
+    write_vector_element<0>(r,a0*b00+a1*b10);
+    write_vector_element<1>(r,a0*b01+a1*b11);
     return r;
     }
 

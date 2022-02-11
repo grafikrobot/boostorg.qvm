@@ -31,7 +31,7 @@ qvm_detail
         void
         f( A & a, B const & b )
             {
-            vec_traits<A>::template write_element<I>(a)=vec_traits<B>::template read_element<I>(b);
+            write_vector_element<I>(a, vec_traits<B>::template read_element<I>(b));
             copy_vector_elements<I+1,N>::f(a,b);
             }
         };
