@@ -17,29 +17,99 @@ template <int I>
 void
 check_idx( test_qvm::vector<V1,10> & v, float & (*f)( test_qvm::vector<V1,10> & ) )
     {
+
     BOOST_TEST((&A<I>(v)==&v.a[I]));
     BOOST_TEST((&f(v)==&v.a[I]));
     }
 
+template <int I>
+void
+check_element_idx()
+    {
+    test_qvm::vector<V1,10> v(0, 1);
+    BOOST_TEST_EQ(A<0>(v), 0);
+    BOOST_TEST_EQ(A<1>(v), 1);
+    BOOST_TEST_EQ(A<2>(v), 2);
+    BOOST_TEST_EQ(A<3>(v), 3);
+    BOOST_TEST_EQ(A<4>(v), 4);
+    BOOST_TEST_EQ(A<5>(v), 5);
+    BOOST_TEST_EQ(A<6>(v), 6);
+    BOOST_TEST_EQ(A<7>(v), 7);
+    BOOST_TEST_EQ(A<8>(v), 8);
+    BOOST_TEST_EQ(A<9>(v), 9);
+    A<I>(v) = 42;
+    BOOST_TEST_EQ(A<0>(v), I==0? 42 : 0);
+    BOOST_TEST_EQ(A<1>(v), I==1? 42 : 1);
+    BOOST_TEST_EQ(A<2>(v), I==2? 42 : 2);
+    BOOST_TEST_EQ(A<3>(v), I==3? 42 : 3);
+    BOOST_TEST_EQ(A<4>(v), I==4? 42 : 4);
+    BOOST_TEST_EQ(A<5>(v), I==5? 42 : 5);
+    BOOST_TEST_EQ(A<6>(v), I==6? 42 : 6);
+    BOOST_TEST_EQ(A<7>(v), I==7? 42 : 7);
+    BOOST_TEST_EQ(A<8>(v), I==8? 42 : 8);
+    BOOST_TEST_EQ(A<9>(v), I==9? 42 : 9);
+    }
+
 int
 main()
-    {       
-    test_qvm::vector<V1,10> v;
-#define CHECK_A(i) check_idx<i>(v,A##i);
-    CHECK_A(0);
-    CHECK_A(1);
-    CHECK_A(2);
-    CHECK_A(3);
-    CHECK_A(4);
-    CHECK_A(5);
-    CHECK_A(6);
-    CHECK_A(7);
-    CHECK_A(8);
-    CHECK_A(9);
-#undef CHECK_A
-    BOOST_TEST(&A<0>(v)==&X(v));
-    BOOST_TEST(&A<1>(v)==&Y(v));
-    BOOST_TEST(&A<2>(v)==&Z(v));
-    BOOST_TEST(&A<3>(v)==&W(v));
+    {
+    check_element_idx<0>();
+    check_element_idx<1>();
+    check_element_idx<2>();
+    check_element_idx<3>();
+    check_element_idx<4>();
+    check_element_idx<5>();
+    check_element_idx<6>();
+    check_element_idx<7>();
+    check_element_idx<8>();
+    check_element_idx<9>();
+        {
+        test_qvm::vector<V1,10> v(0, 1);
+        BOOST_TEST_EQ(X(v), 0);
+        BOOST_TEST_EQ(Y(v), 1);
+        BOOST_TEST_EQ(Z(v), 2);
+        BOOST_TEST_EQ(W(v), 3);
+        X(v) = 42;
+        BOOST_TEST_EQ(X(v), 42);
+        BOOST_TEST_EQ(Y(v), 1);
+        BOOST_TEST_EQ(Z(v), 2);
+        BOOST_TEST_EQ(W(v), 3);
+        }
+        {
+        test_qvm::vector<V1,10> v(0, 1);
+        BOOST_TEST_EQ(X(v), 0);
+        BOOST_TEST_EQ(Y(v), 1);
+        BOOST_TEST_EQ(Z(v), 2);
+        BOOST_TEST_EQ(W(v), 3);
+        Y(v) = 42;
+        BOOST_TEST_EQ(X(v), 0);
+        BOOST_TEST_EQ(Y(v), 42);
+        BOOST_TEST_EQ(Z(v), 2);
+        BOOST_TEST_EQ(W(v), 3);
+        }
+        {
+        test_qvm::vector<V1,10> v(0, 1);
+        BOOST_TEST_EQ(X(v), 0);
+        BOOST_TEST_EQ(Y(v), 1);
+        BOOST_TEST_EQ(Z(v), 2);
+        BOOST_TEST_EQ(W(v), 3);
+        Z(v) = 42;
+        BOOST_TEST_EQ(X(v), 0);
+        BOOST_TEST_EQ(Y(v), 1);
+        BOOST_TEST_EQ(Z(v), 42);
+        BOOST_TEST_EQ(W(v), 3);
+        }
+        {
+        test_qvm::vector<V1,10> v(0, 1);
+        BOOST_TEST_EQ(X(v), 0);
+        BOOST_TEST_EQ(Y(v), 1);
+        BOOST_TEST_EQ(Z(v), 2);
+        BOOST_TEST_EQ(W(v), 3);
+        W(v) = 42;
+        BOOST_TEST_EQ(X(v), 0);
+        BOOST_TEST_EQ(Y(v), 1);
+        BOOST_TEST_EQ(Z(v), 2);
+        BOOST_TEST_EQ(W(v), 42);
+        }
     return boost::report_errors();
     }

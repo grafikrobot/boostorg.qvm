@@ -27,9 +27,9 @@ main()
     BOOST_TEST_EQ(X(V(qq)),q.a[1]);
     BOOST_TEST_EQ(Y(V(qq)),q.a[2]);
     BOOST_TEST_EQ(Z(V(qq)),q.a[3]);
-    BOOST_TEST(&X(V(q))==&q.a[1]);
-    BOOST_TEST(&Y(V(q))==&q.a[2]);
-    BOOST_TEST(&Z(V(q))==&q.a[3]);
+    BOOST_TEST(X(V(q))==q.a[1]);
+    BOOST_TEST(Y(V(q))==q.a[2]);
+    BOOST_TEST(Z(V(q))==q.a[3]);
 
     BOOST_TEST_EQ(S(qq),q.a[0]);
     BOOST_TEST_EQ(X(qq),q.a[1]);

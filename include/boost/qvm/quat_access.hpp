@@ -35,6 +35,49 @@ qvm_detail
         quat_v_ const & operator=( quat_v_ const & );
         ~quat_v_();
         };
+
+    template <class Q,bool WriteElementRef=quat_write_element_ref<Q>::value>
+    struct quat_v_write_traits;
+
+    template <class Q>
+    struct
+    quat_v_write_traits<Q,true>
+        {
+        typedef qvm_detail::quat_v_<Q> this_vector;
+        typedef typename quat_traits<Q>::scalar_type scalar_type;
+        static int const dim=3;
+
+        template <int I>
+        BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
+        static
+        scalar_type &
+        write_element( this_vector & q )
+            {
+            BOOST_QVM_STATIC_ASSERT(I>=0);
+            BOOST_QVM_STATIC_ASSERT(I<dim);
+            return quat_traits<Q>::template write_element<I+1>( reinterpret_cast<Q &>(q) );
+            }
+        };
+
+    template <class Q>
+    struct
+    quat_v_write_traits<Q,false>
+        {
+        typedef qvm_detail::quat_v_<Q> this_vector;
+        typedef typename quat_traits<Q>::scalar_type scalar_type;
+        static int const dim=3;
+
+        template <int I>
+        BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
+        static
+        void
+        write_element( this_vector & q, scalar_type s )
+            {
+            BOOST_QVM_STATIC_ASSERT(I>=0);
+            BOOST_QVM_STATIC_ASSERT(I<dim);
+            quat_traits<Q>::template write_element<I+1>( reinterpret_cast<Q &>(q), s );
+            }
+        };
     }
 
 template <class V>
@@ -42,7 +85,8 @@ struct vec_traits;
 
 template <class Q>
 struct
-vec_traits< qvm_detail::quat_v_<Q> >
+vec_traits< qvm_detail::quat_v_<Q> >:
+    qvm_detail::quat_v_write_traits<Q>
     {
     typedef qvm_detail::quat_v_<Q> this_vector;
     typedef typename quat_traits<Q>::scalar_type scalar_type;
@@ -57,17 +101,6 @@ vec_traits< qvm_detail::quat_v_<Q> >
         BOOST_QVM_STATIC_ASSERT(I>=0);
         BOOST_QVM_STATIC_ASSERT(I<dim);
         return quat_traits<Q>::template read_element<I+1>( reinterpret_cast<Q const &>(q) );
-        }
-
-    template <int I>
-    BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
-    static
-    scalar_type &
-    write_element( this_vector & q )
-        {
-        BOOST_QVM_STATIC_ASSERT(I>=0);
-        BOOST_QVM_STATIC_ASSERT(I<dim);
-        return quat_traits<Q>::template write_element<I+1>( reinterpret_cast<Q &>(q) );
         }
     };
 

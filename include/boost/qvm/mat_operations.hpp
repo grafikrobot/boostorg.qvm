@@ -905,11 +905,85 @@ qvm_detail
             return r;
             }
         };
+
+    template <class M,bool WriteElementRef=mat_write_element_ref<M>::value>
+    struct mref_write_traits;
+
+    template <class M>
+    struct
+    mref_write_traits<M,true>
+        {
+        typedef typename mat_traits<M>::scalar_type scalar_type;
+        typedef qvm_detail::mref_<M> this_matrix;
+        static int const rows=mat_traits<M>::rows;
+        static int const cols=mat_traits<M>::cols;
+
+        template <int Row,int Col>
+        static
+        BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
+        scalar_type &
+        write_element( this_matrix & x )
+            {
+            BOOST_QVM_STATIC_ASSERT(Row>=0);
+            BOOST_QVM_STATIC_ASSERT(Row<rows);
+            BOOST_QVM_STATIC_ASSERT(Col>=0);
+            BOOST_QVM_STATIC_ASSERT(Col<cols);
+            return mat_traits<M>::template write_element<Row,Col>(reinterpret_cast<M &>(x));
+            }
+
+        static
+        BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
+        scalar_type &
+        write_element_idx( int row, int col, this_matrix & x )
+            {
+            BOOST_QVM_ASSERT(row>=0);
+            BOOST_QVM_ASSERT(row<rows);
+            BOOST_QVM_ASSERT(col>=0);
+            BOOST_QVM_ASSERT(col<cols);
+            return mat_traits<M>::write_element_idx(row,col,reinterpret_cast<M &>(x));
+            }
+        };
+
+    template <class M>
+    struct
+    mref_write_traits<M,false>
+        {
+        typedef typename mat_traits<M>::scalar_type scalar_type;
+        typedef qvm_detail::mref_<M> this_matrix;
+        static int const rows=mat_traits<M>::rows;
+        static int const cols=mat_traits<M>::cols;
+
+        template <int Row,int Col>
+        static
+        BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
+        void
+        write_element( this_matrix & x, scalar_type s )
+            {
+            BOOST_QVM_STATIC_ASSERT(Row>=0);
+            BOOST_QVM_STATIC_ASSERT(Row<rows);
+            BOOST_QVM_STATIC_ASSERT(Col>=0);
+            BOOST_QVM_STATIC_ASSERT(Col<cols);
+            mat_traits<M>::template write_element<Row,Col>(reinterpret_cast<M &>(x), s);
+            }
+
+        static
+        BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
+        void
+        write_element_idx( int row, int col, this_matrix & x, scalar_type s )
+            {
+            BOOST_QVM_ASSERT(row>=0);
+            BOOST_QVM_ASSERT(row<rows);
+            BOOST_QVM_ASSERT(col>=0);
+            BOOST_QVM_ASSERT(col<cols);
+            mat_traits<M>::write_element_idx(row,col,reinterpret_cast<M &>(x), s);
+            }
+        };
     }
 
 template <class M>
 struct
-mat_traits< qvm_detail::mref_<M> >
+mat_traits< qvm_detail::mref_<M> >:
+    qvm_detail::mref_write_traits<M>
     {
     typedef typename mat_traits<M>::scalar_type scalar_type;
     typedef qvm_detail::mref_<M> this_matrix;
@@ -929,19 +1003,6 @@ mat_traits< qvm_detail::mref_<M> >
         return mat_traits<M>::template read_element<Row,Col>(reinterpret_cast<M const &>(x));
         }
 
-    template <int Row,int Col>
-    static
-    BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
-    scalar_type &
-    write_element( this_matrix & x )
-        {
-        BOOST_QVM_STATIC_ASSERT(Row>=0);
-        BOOST_QVM_STATIC_ASSERT(Row<rows);
-        BOOST_QVM_STATIC_ASSERT(Col>=0);
-        BOOST_QVM_STATIC_ASSERT(Col<cols);
-        return mat_traits<M>::template write_element<Row,Col>(reinterpret_cast<M &>(x));
-        }
-
     static
     BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
     scalar_type
@@ -952,18 +1013,6 @@ mat_traits< qvm_detail::mref_<M> >
         BOOST_QVM_ASSERT(col>=0);
         BOOST_QVM_ASSERT(col<cols);
         return mat_traits<M>::read_element_idx(row,col,reinterpret_cast<M const &>(x));
-        }
-
-    static
-    BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
-    scalar_type &
-    write_element_idx( int row, int col, this_matrix & x )
-        {
-        BOOST_QVM_ASSERT(row>=0);
-        BOOST_QVM_ASSERT(row<rows);
-        BOOST_QVM_ASSERT(col>=0);
-        BOOST_QVM_ASSERT(col<cols);
-        return mat_traits<M>::write_element_idx(row,col,reinterpret_cast<M &>(x));
         }
     };
 

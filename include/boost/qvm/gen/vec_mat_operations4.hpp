@@ -49,10 +49,10 @@ operator*( A const & a, B const & b )
     typedef typename deduce_vec2<A,B,4>::type R;
     BOOST_QVM_STATIC_ASSERT(vec_traits<R>::dim==4);
     R r;
-    write_vector_element<0>(r,a00*b0+a01*b1+a02*b2+a03*b3);
-    write_vector_element<1>(r,a10*b0+a11*b1+a12*b2+a13*b3);
-    write_vector_element<2>(r,a20*b0+a21*b1+a22*b2+a23*b3);
-    write_vector_element<3>(r,a30*b0+a31*b1+a32*b2+a33*b3);
+    write_vec_element<0>(r,a00*b0+a01*b1+a02*b2+a03*b3);
+    write_vec_element<1>(r,a10*b0+a11*b1+a12*b2+a13*b3);
+    write_vec_element<2>(r,a20*b0+a21*b1+a22*b2+a23*b3);
+    write_vec_element<3>(r,a30*b0+a31*b1+a32*b2+a33*b3);
     return r;
     }
 
@@ -109,10 +109,10 @@ operator*( A const & a, B const & b )
     typedef typename deduce_vec2<A,B,4>::type R;
     BOOST_QVM_STATIC_ASSERT(vec_traits<R>::dim==4);
     R r;
-    write_vector_element<0>(r,a0*b00+a1*b10+a2*b20+a3*b30);
-    write_vector_element<1>(r,a0*b01+a1*b11+a2*b21+a3*b31);
-    write_vector_element<2>(r,a0*b02+a1*b12+a2*b22+a3*b32);
-    write_vector_element<3>(r,a0*b03+a1*b13+a2*b23+a3*b33);
+    write_vec_element<0>(r,a0*b00+a1*b10+a2*b20+a3*b30);
+    write_vec_element<1>(r,a0*b01+a1*b11+a2*b21+a3*b31);
+    write_vec_element<2>(r,a0*b02+a1*b12+a2*b22+a3*b32);
+    write_vec_element<3>(r,a0*b03+a1*b13+a2*b23+a3*b33);
     return r;
     }
 

@@ -757,6 +757,47 @@ qvm_detail
             return r;
             }
         };
+
+    template <class Q,bool WriteElementRef=quat_write_element_ref<Q>::value>
+    struct qref_write_traits;
+
+    template <class Q>
+    struct
+    qref_write_traits<Q,true>
+        {
+        typedef typename quat_traits<Q>::scalar_type scalar_type;
+        typedef qvm_detail::qref_<Q> this_quaternion;
+
+        template <int I>
+        static
+        BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
+        scalar_type &
+        write_element( this_quaternion & x )
+            {
+            BOOST_QVM_STATIC_ASSERT(I>=0);
+            BOOST_QVM_STATIC_ASSERT(I<4);
+            return quat_traits<Q>::template write_element<I>(reinterpret_cast<Q &>(x));
+            }
+        };
+
+    template <class Q>
+    struct
+    qref_write_traits<Q,false>
+        {
+        typedef typename quat_traits<Q>::scalar_type scalar_type;
+        typedef qvm_detail::qref_<Q> this_quaternion;
+
+        template <int I>
+        static
+        BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
+        void
+        write_element( this_quaternion & x, scalar_type s )
+            {
+            BOOST_QVM_STATIC_ASSERT(I>=0);
+            BOOST_QVM_STATIC_ASSERT(I<4);
+            quat_traits<Q>::template write_element<I>(reinterpret_cast<Q &>(x), s);
+            }
+        };
     }
 
 template <class Q>
@@ -764,7 +805,8 @@ struct quat_traits;
 
 template <class Q>
 struct
-quat_traits< qvm_detail::qref_<Q> >
+quat_traits< qvm_detail::qref_<Q> >:
+    qvm_detail::qref_write_traits<Q>
     {
     typedef typename quat_traits<Q>::scalar_type scalar_type;
     typedef qvm_detail::qref_<Q> this_quaternion;
@@ -778,17 +820,6 @@ quat_traits< qvm_detail::qref_<Q> >
         BOOST_QVM_STATIC_ASSERT(I>=0);
         BOOST_QVM_STATIC_ASSERT(I<4);
         return quat_traits<Q>::template read_element<I>(reinterpret_cast<Q const &>(x));
-        }
-
-    template <int I>
-    static
-    BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
-    scalar_type &
-    write_element( this_quaternion & x )
-        {
-        BOOST_QVM_STATIC_ASSERT(I>=0);
-        BOOST_QVM_STATIC_ASSERT(I<4);
-        return quat_traits<Q>::template write_element<I>(reinterpret_cast<Q &>(x));
         }
     };
 
@@ -1424,15 +1455,15 @@ axis_angle( A const & a, B & b )
         }
     if( T s=sqrt(1-a0*a0) )
         {
-        write_vector_element<0>(b, a1/s);
-        write_vector_element<1>(b, a2/s);
-        write_vector_element<2>(b, a3/s);
+        write_vec_element<0>(b, a1/s);
+        write_vec_element<1>(b, a2/s);
+        write_vec_element<2>(b, a3/s);
         }
     else
         {
         typedef typename vec_traits<B>::scalar_type U;
-        write_vector_element<0>(b, scalar_traits<U>::value(1));
-        write_vector_element<1>(b, vec_traits<B>::template write_element<2>(b) = scalar_traits<U>::value(0));
+        write_vec_element<0>(b, scalar_traits<U>::value(1));
+        write_vec_element<1>(b, vec_traits<B>::template write_element<2>(b) = scalar_traits<U>::value(0));
         }
     return scalar_traits<T>::value(2) * qvm::acos(a0);
     }

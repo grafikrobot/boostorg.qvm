@@ -126,13 +126,13 @@ cross( A const & a, B const & b )
     {
     typedef typename deduce_vec2<A,B,3>::type R;
     R r;
-    write_vector_element<0>(r,
+    write_vec_element<0>(r,
         vec_traits<A>::template read_element<1>(a)*vec_traits<B>::template read_element<2>(b)-
         vec_traits<A>::template read_element<2>(a)*vec_traits<B>::template read_element<1>(b));
-    write_vector_element<1>(r,
+    write_vec_element<1>(r,
         vec_traits<A>::template read_element<2>(a)*vec_traits<B>::template read_element<0>(b)-
         vec_traits<A>::template read_element<0>(a)*vec_traits<B>::template read_element<2>(b));
-    write_vector_element<2>(r,
+    write_vec_element<2>(r,
         vec_traits<A>::template read_element<0>(a)*vec_traits<B>::template read_element<1>(b)-
         vec_traits<A>::template read_element<1>(a)*vec_traits<B>::template read_element<0>(b));
     return r;
@@ -854,11 +854,75 @@ qvm_detail
             return r;
             }
         };
+
+    template <class V,bool WriteElementRef=vec_write_element_ref<V>::value>
+    struct vref_write_traits;
+
+    template <class V>
+    struct
+    vref_write_traits<V,true>
+        {
+        typedef typename vec_traits<V>::scalar_type scalar_type;
+        typedef qvm_detail::vref_<V> this_vector;
+        static int const dim=vec_traits<V>::dim;
+
+        template <int I>
+        static
+        BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
+        scalar_type &
+        write_element( this_vector & x )
+            {
+            BOOST_QVM_STATIC_ASSERT(I>=0);
+            BOOST_QVM_STATIC_ASSERT(I<dim);
+            return vec_traits<V>::template write_element<I>(reinterpret_cast<V &>(x));
+            }
+
+        static
+        BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
+        scalar_type &
+        write_element_idx( int i, this_vector & x )
+            {
+            BOOST_QVM_ASSERT(i>=0);
+            BOOST_QVM_ASSERT(i<dim);
+            return vec_traits<V>::write_element_idx(i,reinterpret_cast<V &>(x));
+            }
+        };
+
+    template <class V>
+    struct
+    vref_write_traits<V,false>
+        {
+        typedef typename vec_traits<V>::scalar_type scalar_type;
+        typedef qvm_detail::vref_<V> this_vector;
+        static int const dim=vec_traits<V>::dim;
+
+        template <int I>
+        static
+        BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
+        void
+        write_element( this_vector & x, scalar_type s )
+            {
+            BOOST_QVM_STATIC_ASSERT(I>=0);
+            BOOST_QVM_STATIC_ASSERT(I<dim);
+            vec_traits<V>::template write_element<I>(reinterpret_cast<V &>(x), s);
+            }
+
+        static
+        BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
+        void
+        write_element_idx( int i, this_vector & x, scalar_type s )
+            {
+            BOOST_QVM_ASSERT(i>=0);
+            BOOST_QVM_ASSERT(i<dim);
+            vec_traits<V>::write_element_idx(i,reinterpret_cast<V &>(x), s);
+            }
+        };
     }
 
 template <class V>
 struct
-vec_traits< qvm_detail::vref_<V> >
+vec_traits< qvm_detail::vref_<V> >:
+    qvm_detail::vref_write_traits<V>
     {
     typedef typename vec_traits<V>::scalar_type scalar_type;
     typedef qvm_detail::vref_<V> this_vector;
@@ -875,17 +939,6 @@ vec_traits< qvm_detail::vref_<V> >
         return vec_traits<V>::template read_element<I>(reinterpret_cast<V const &>(x));
         }
 
-    template <int I>
-    static
-    BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
-    scalar_type &
-    write_element( this_vector & x )
-        {
-        BOOST_QVM_STATIC_ASSERT(I>=0);
-        BOOST_QVM_STATIC_ASSERT(I<dim);
-        return vec_traits<V>::template write_element<I>(reinterpret_cast<V &>(x));
-        }
-
     static
     BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
     scalar_type
@@ -894,16 +947,6 @@ vec_traits< qvm_detail::vref_<V> >
         BOOST_QVM_ASSERT(i>=0);
         BOOST_QVM_ASSERT(i<dim);
         return vec_traits<V>::read_element_idx(i,reinterpret_cast<V const &>(x));
-        }
-
-    static
-    BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
-    scalar_type &
-    write_element_idx( int i, this_vector & x )
-        {
-        BOOST_QVM_ASSERT(i>=0);
-        BOOST_QVM_ASSERT(i<dim);
-        return vec_traits<V>::write_element_idx(i,reinterpret_cast<V &>(x));
         }
     };
 

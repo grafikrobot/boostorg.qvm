@@ -38,12 +38,26 @@ qvm_detail
     vtr_dispatch_type2 vtr_dispatch(...);
     }
 
+template <class V,bool IsVec=is_vec<V>::value>
+struct
+vec_write_element_ref
+    {
+    static bool const value = sizeof(qvm_detail::vtr_dispatch(&vec_traits<V>::template write_element<0>)) == sizeof(qvm_detail::vtr_dispatch_type1);
+    };
+
+template <class V>
+struct
+vec_write_element_ref<V,false>
+    {
+    static bool const value = false;
+    };
+
 template <int I, class V>
 BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
 typename enable_if_c<
-    sizeof(qvm_detail::vtr_dispatch(&vec_traits<V>::template write_element<I>)) == sizeof(qvm_detail::vtr_dispatch_type1),
+    vec_write_element_ref<V>::value,
     void>::type
-write_vector_element( V & v, typename vec_traits<V>::scalar_type s )
+write_vec_element( V & v, typename vec_traits<V>::scalar_type s )
     {
     vec_traits<V>::template write_element<I>(v) = s;
     }
@@ -51,11 +65,31 @@ write_vector_element( V & v, typename vec_traits<V>::scalar_type s )
 template <int I, class V>
 BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
 typename enable_if_c<
-    sizeof(qvm_detail::vtr_dispatch(&vec_traits<V>::template write_element<I>)) != sizeof(qvm_detail::vtr_dispatch_type1),
+    !vec_write_element_ref<V>::value,
     void>::type
-write_vector_element( V & v, typename vec_traits<V>::scalar_type s )
+write_vec_element( V & v, typename vec_traits<V>::scalar_type s )
     {
     vec_traits<V>::template write_element<I>(v, s);
+    }
+
+template <class V>
+BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
+typename enable_if_c<
+    vec_write_element_ref<V>::value,
+    void>::type
+write_vec_element_idx( int i, V & v, typename vec_traits<V>::scalar_type s )
+    {
+    vec_traits<V>::template write_element_idx(i, v) = s;
+    }
+
+template <class V>
+BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
+typename enable_if_c<
+    !vec_write_element_ref<V>::value,
+    void>::type
+write_vec_element_idx( int i, V & v, typename vec_traits<V>::scalar_type s )
+    {
+    vec_traits<V>::template write_element_idx(i, v, s);
     }
 
 } }

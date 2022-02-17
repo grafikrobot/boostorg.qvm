@@ -28,10 +28,23 @@ qvm_detail
         {
         template <class A,class B>
         static
-        void
+        typename enable_if_c<
+            vec_write_element_ref<A>::value,
+            void>::type
         f( A & a, B const & b )
             {
-            write_vector_element<I>(a, vec_traits<B>::template read_element<I>(b));
+            vec_traits<A>::template write_element<I>(a) = vec_traits<B>::template read_element<I>(b);
+            copy_vector_elements<I+1,N>::f(a,b);
+            }
+
+        template <class A,class B>
+        static
+        typename enable_if_c<
+            !vec_write_element_ref<A>::value,
+            void>::type
+        f( A & a, B const & b )
+            {
+            vec_traits<A>::template write_element<I>(a, vec_traits<B>::template read_element<I>(b));
             copy_vector_elements<I+1,N>::f(a,b);
             }
         };
