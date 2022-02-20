@@ -1085,9 +1085,9 @@ mat_traits< qvm_detail::zero_mat_<T,Rows,Cols> >
     read_element( this_matrix const & )
         {
         BOOST_QVM_STATIC_ASSERT(Row>=0);
-        BOOST_QVM_STATIC_ASSERT(Row<Rows);
+        BOOST_QVM_STATIC_ASSERT(Row<rows);
         BOOST_QVM_STATIC_ASSERT(Col>=0);
-        BOOST_QVM_STATIC_ASSERT(Col<Cols);
+        BOOST_QVM_STATIC_ASSERT(Col<cols);
         return scalar_traits<scalar_type>::value(0);
         }
 
