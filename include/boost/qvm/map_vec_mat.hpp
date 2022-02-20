@@ -464,9 +464,12 @@ qvm_detail
         write_element( this_matrix & x )
             {
             BOOST_QVM_STATIC_ASSERT(Row>=0);
-            BOOST_QVM_STATIC_ASSERT(Row<rows);
-            BOOST_QVM_STATIC_ASSERT(Col==cols-1);
-            BOOST_QVM_STATIC_ASSERT(Col!=Row);
+            BOOST_QVM_STATIC_ASSERT(Row<rows-1);
+            BOOST_QVM_STATIC_ASSERT(Col==cols-1 || Col==0);
+            //The following should be a static_assert, but this is a constexpr
+            //function and it gets instantiated with Row=0 and Col=0 in the
+            //mat_write_element_ref test (in a sizeof expression).
+            BOOST_QVM_ASSERT(Col==cols-1);
             return vec_traits<OriginalVector>::template write_element<Row>(reinterpret_cast<OriginalVector &>(x));
             }
 
@@ -476,9 +479,8 @@ qvm_detail
         write_element_idx( int row, int col, this_matrix const & x )
             {
             BOOST_QVM_ASSERT(row>=0);
-            BOOST_QVM_ASSERT(row<rows);
+            BOOST_QVM_ASSERT(row<rows-1);
             BOOST_QVM_ASSERT(col==cols-1);
-            BOOST_QVM_ASSERT(col!=row);
             return vec_traits<OriginalVector>::write_element_idx(row,reinterpret_cast<OriginalVector &>(x));
             }
         };

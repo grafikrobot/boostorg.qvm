@@ -27,29 +27,20 @@ is_vec
     static bool const value = is_scalar<typename vec_traits<T>::scalar_type>::value && vec_traits<T>::dim>0;
     };
 
-namespace
-qvm_detail
-    {
-    struct vtr_dispatch_type1 { int a[1]; };
-    struct vtr_dispatch_type2 { int a[2]; };
-
-    template <class T, class U>
-    vtr_dispatch_type1 vtr_dispatch(T (*)(U));
-    vtr_dispatch_type2 vtr_dispatch(...);
-    }
-
-template <class V,bool IsVec=is_vec<V>::value>
+template <class,class=void>
 struct
 vec_write_element_ref
     {
-    static bool const value = sizeof(qvm_detail::vtr_dispatch(&vec_traits<V>::template write_element<0>)) == sizeof(qvm_detail::vtr_dispatch_type1);
+    static bool const value = false;
     };
 
-template <class V>
+template <class T>
 struct
-vec_write_element_ref<V,false>
+vec_write_element_ref<T,
+    typename enable_if_c<
+        sizeof(vec_traits<T>::template write_element<0>(*(T*)0), 0) != 0>::type>
     {
-    static bool const value = false;
+    static bool const value = true;
     };
 
 template <int I, class V>

@@ -28,29 +28,20 @@ is_mat
     static bool const value = is_scalar<typename mat_traits<T>::scalar_type>::value && mat_traits<T>::rows>0 && mat_traits<T>::cols>0;
     };
 
-namespace
-qvm_detail
-    {
-    struct mtr_dispatch_type1 { int a[1]; };
-    struct mtr_dispatch_type2 { int a[2]; };
-
-    template <class T, class U>
-    mtr_dispatch_type1 mtr_dispatch(T (*)(U));
-    mtr_dispatch_type2 mtr_dispatch(...);
-    }
-
-template <class M>
+template <class,class=void>
 struct
 mat_write_element_ref
     {
-    static bool const value = sizeof(qvm_detail::mtr_dispatch(&mat_traits<M>::template write_element<0,0>)) == sizeof(qvm_detail::mtr_dispatch_type1);
+    static bool const value = false;
     };
 
-template <class M>
+template <class T>
 struct
-mat_write_element_ref<M const>
+mat_write_element_ref<T,
+    typename enable_if_c<
+        sizeof(mat_traits<T>::template write_element<0,0>(*(T*)0), 0) != 0>::type>
     {
-    static bool const value = sizeof(qvm_detail::mtr_dispatch(&mat_traits<M>::template write_element<0,0>)) == sizeof(qvm_detail::mtr_dispatch_type1);
+    static bool const value = true;
     };
 
 template <int R, int C, class M>
