@@ -26,6 +26,17 @@ is_quat
     static bool const value = is_scalar<typename quat_traits<T>::scalar_type>::value;
     };
 
+namespace
+qvm_detail
+    {
+    struct qtr_dispatch_type1 { int a[1]; };
+    struct qtr_dispatch_type2 { int a[2]; };
+
+    template <class T, class U>
+    qtr_dispatch_type1 qtr_dispatch(T (*)(U));
+    qtr_dispatch_type2 qtr_dispatch(...);
+    }
+
 template <class,class=void>
 struct
 quat_write_element_ref
@@ -37,7 +48,7 @@ template <class T>
 struct
 quat_write_element_ref<T,
     typename enable_if_c<
-        sizeof(quat_traits<T>::template write_element<0>(*(T*)0), 0) != 0>::type>
+        sizeof(qvm_detail::qtr_dispatch(&quat_traits<T>::template write_element<0>)) == sizeof(qvm_detail::qtr_dispatch_type1)>::type>
     {
     static bool const value = true;
     };
