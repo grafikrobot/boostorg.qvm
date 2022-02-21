@@ -360,7 +360,7 @@ typename enable_if_c<
 operator/=( A & a, B b )
     {
     for( int i=0; i!=vec_traits<A>::dim; ++i )
-        vec_traits<A>::write_element_idx(i,a)/=b;
+        write_vec_element_idx(i,a,vec_traits<A>::read_element_idx(i,a)/b);
     return a;
     }
 
@@ -534,7 +534,7 @@ typename enable_if_c<
 operator-=( A & a, B const & b )
     {
     for( int i=0; i!=vec_traits<A>::dim; ++i )
-        vec_traits<A>::write_element_idx(i,a)-=vec_traits<B>::read_element_idx(i,b);
+        write_vec_element_idx(i,a,vec_traits<A>::read_element_idx(i,a)-vec_traits<B>::read_element_idx(i,b));
     return a;
     }
 
@@ -617,7 +617,7 @@ typename enable_if_c<
 operator*=( A & a, B b )
     {
     for( int i=0; i!=vec_traits<A>::dim; ++i )
-        vec_traits<A>::write_element_idx(i,a)*=b;
+        write_vec_element_idx(i,a,vec_traits<A>::read_element_idx(i,a)*b);
     return a;
     }
 
@@ -788,7 +788,7 @@ typename enable_if_c<
 operator+=( A & a, B const & b )
     {
     for( int i=0; i!=vec_traits<A>::dim; ++i )
-        vec_traits<A>::write_element_idx(i,a)+=vec_traits<B>::read_element_idx(i,b);
+        write_vec_element_idx(i,a,vec_traits<A>::read_element_idx(i,a)+vec_traits<B>::read_element_idx(i,b));
     return a;
     }
 

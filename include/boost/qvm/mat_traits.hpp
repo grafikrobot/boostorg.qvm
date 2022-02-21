@@ -71,7 +71,7 @@ typename enable_if_c<
     void>::type
 write_mat_element_idx( int r, int c, M & m, typename mat_traits<M>::scalar_type s )
     {
-    mat_traits<M>::template write_element_idx(r, c, m) = s;
+    mat_traits<M>::write_element_idx(r, c, m) = s;
     }
 
 template <class M>
@@ -81,7 +81,7 @@ typename enable_if_c<
     void>::type
 write_mat_element_idx( int r, int c, M & m, typename mat_traits<M>::scalar_type s )
     {
-    mat_traits<M>::template write_element_idx(r, c, m, s);
+    mat_traits<M>::write_element_idx(r, c, m, s);
     }
 
 } }

@@ -468,7 +468,7 @@ operator/=( A & a, B b )
     {
     for( int i=0; i!=mat_traits<A>::rows; ++i )
         for( int j=0; j!=mat_traits<A>::cols; ++j )
-            mat_traits<A>::write_element_idx(i,j,a)/=b;
+            write_mat_element_idx(i,j,a,mat_traits<A>::read_element_idx(i,j,a)/b);
     return a;
     }
 
@@ -497,7 +497,7 @@ operator/( A const & a, B b )
     R r;
     for( int i=0; i!=mat_traits<A>::rows; ++i )
         for( int j=0; j!=mat_traits<A>::cols; ++j )
-            mat_traits<R>::write_element_idx(i,j,r)=mat_traits<A>::read_element_idx(i,j,a)/b;
+            write_mat_element_idx(i,j,r,mat_traits<A>::read_element_idx(i,j,a)/b);
     return r;
     }
 
@@ -556,7 +556,7 @@ operator-=( A & a, B const & b )
     {
     for( int i=0; i!=mat_traits<A>::rows; ++i )
         for( int j=0; j!=mat_traits<A>::cols; ++j )
-            mat_traits<A>::write_element_idx(i,j,a)-=mat_traits<B>::read_element_idx(i,j,b);
+            write_mat_element_idx(i,j,a,mat_traits<A>::read_element_idx(i,j,a)-mat_traits<B>::read_element_idx(i,j,b));
     return a;
     }
 
@@ -585,7 +585,7 @@ operator-( A const & a )
     R r;
     for( int i=0; i!=mat_traits<A>::rows; ++i )
         for( int j=0; j!=mat_traits<A>::cols; ++j )
-            mat_traits<R>::write_element_idx(i,j,r)=-mat_traits<A>::read_element_idx(i,j,a);
+            write_mat_element_idx(i,j,r,-mat_traits<A>::read_element_idx(i,j,a));
     return r;
     }
 
@@ -616,7 +616,7 @@ operator-( A const & a, B const & b )
     R r;
     for( int i=0; i!=mat_traits<A>::rows; ++i )
         for( int j=0; j!=mat_traits<A>::cols; ++j )
-            mat_traits<R>::write_element_idx(i,j,r)=mat_traits<A>::read_element_idx(i,j,a)-mat_traits<B>::read_element_idx(i,j,b);
+            write_mat_element_idx(i,j,r,mat_traits<A>::read_element_idx(i,j,a)-mat_traits<B>::read_element_idx(i,j,b));
     return r;
     }
 
@@ -656,7 +656,7 @@ operator*=( A & r, B const & b )
             Ta x(scalar_traits<Ta>::value(0));
             for( int k=0; k<mat_traits<A>::cols; ++k )
                 x += a[i][k]*mat_traits<B>::read_element_idx(k,j,b);
-            mat_traits<A>::write_element_idx(i,j,r) = x;
+            write_mat_element_idx(i,j,r,x);
             }
     return r;
     }
@@ -684,7 +684,7 @@ operator*=( A & a, B b )
     {
     for( int i=0; i!=mat_traits<A>::rows; ++i )
         for( int j=0; j!=mat_traits<A>::cols; ++j )
-            mat_traits<A>::write_element_idx(i,j,a)*=b;
+            write_mat_element_idx(i,j,a,mat_traits<A>::read_element_idx(i,j,a)*b);
     return a;
     }
 
@@ -719,7 +719,7 @@ operator*( A const & a, B const & b )
             Ta x(scalar_traits<Ta>::value(0));
             for( int k=0; k<mat_traits<A>::cols; ++k )
                 x += mat_traits<A>::read_element_idx(i,k,a)*mat_traits<B>::read_element_idx(k,j,b);
-            mat_traits<R>::write_element_idx(i,j,r) = x;
+            write_mat_element_idx(i,j,r,x);
             }
     return r;
     }
@@ -749,7 +749,7 @@ operator*( A const & a, B b )
     R r;
     for( int i=0; i!=mat_traits<A>::rows; ++i )
         for( int j=0; j!=mat_traits<A>::cols; ++j )
-            mat_traits<R>::write_element_idx(i,j,r)=mat_traits<A>::read_element_idx(i,j,a)*b;
+            write_mat_element_idx(i,j,r,mat_traits<A>::read_element_idx(i,j,a)*b);
     return r;
     }
 
@@ -778,7 +778,7 @@ operator*( A a, B const & b )
     R r;
     for( int i=0; i!=mat_traits<B>::rows; ++i )
         for( int j=0; j!=mat_traits<B>::cols; ++j )
-            mat_traits<R>::write_element_idx(i,j,r)=a*mat_traits<B>::read_element_idx(i,j,b);
+            write_mat_element_idx(i,j,r,a*mat_traits<B>::read_element_idx(i,j,b));
     return r;
     }
 
@@ -837,7 +837,7 @@ operator+=( A & a, B const & b )
     {
     for( int i=0; i!=mat_traits<A>::rows; ++i )
         for( int j=0; j!=mat_traits<A>::cols; ++j )
-            mat_traits<A>::write_element_idx(i,j,a)+=mat_traits<B>::read_element_idx(i,j,b);
+            write_mat_element_idx(i,j,a,mat_traits<A>::read_element_idx(i,j,a)+mat_traits<B>::read_element_idx(i,j,b));
     return a;
     }
 
@@ -868,7 +868,7 @@ operator+( A const & a, B const & b )
     R r;
     for( int i=0; i!=mat_traits<A>::rows; ++i )
         for( int j=0; j!=mat_traits<A>::cols; ++j )
-            mat_traits<R>::write_element_idx(i,j,r)=mat_traits<A>::read_element_idx(i,j,a)+mat_traits<B>::read_element_idx(i,j,b);
+            write_mat_element_idx(i,j,r,mat_traits<A>::read_element_idx(i,j,a)+mat_traits<B>::read_element_idx(i,j,b));
     return r;
     }
 

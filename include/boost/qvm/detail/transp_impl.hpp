@@ -80,18 +80,6 @@ qvm_detail
             BOOST_QVM_ASSERT(col<cols);
             return mat_traits<OriginalMatrix>::write_element_idx(col,row,reinterpret_cast<OriginalMatrix &>(x));
             }
-
-        static
-        BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
-        void
-        write_element_idx( int row, int col, this_matrix & x, scalar_type s )
-            {
-            BOOST_QVM_ASSERT(row>=0);
-            BOOST_QVM_ASSERT(row<rows);
-            BOOST_QVM_ASSERT(col>=0);
-            BOOST_QVM_ASSERT(col<cols);
-            mat_traits<OriginalMatrix>::write_element_idx(col,row,reinterpret_cast<OriginalMatrix &>(x), s);
-            }
         };
 
     template <class OriginalMatrix>
@@ -114,6 +102,18 @@ qvm_detail
             BOOST_QVM_STATIC_ASSERT(Col>=0);
             BOOST_QVM_STATIC_ASSERT(Col<cols);
             mat_traits<OriginalMatrix>::template write_element<Col,Row>(reinterpret_cast<OriginalMatrix &>(x), s);
+            }
+
+        static
+        BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
+        void
+        write_element_idx( int row, int col, this_matrix & x, scalar_type s )
+            {
+            BOOST_QVM_ASSERT(row>=0);
+            BOOST_QVM_ASSERT(row<rows);
+            BOOST_QVM_ASSERT(col>=0);
+            BOOST_QVM_ASSERT(col<cols);
+            mat_traits<OriginalMatrix>::write_element_idx(col,row,reinterpret_cast<OriginalMatrix &>(x), s);
             }
         };
     }

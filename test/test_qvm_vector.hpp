@@ -39,81 +39,81 @@ test_qvm
 
 namespace boost { namespace qvm {
 
-        template <class Tag,int Dim,class T>
-        struct
-        vec_traits< test_qvm::vector<Tag,Dim,T,true> >:
-            vec_traits_defaults<test_qvm::vector<Tag,Dim,T,true>,T,Dim>
-            {
-            typedef vec_traits_defaults<test_qvm::vector<Tag,Dim,T,true>,T,Dim> base;
+template <class Tag,int Dim,class T>
+struct
+vec_traits< test_qvm::vector<Tag,Dim,T,true> >:
+    vec_traits_defaults<test_qvm::vector<Tag,Dim,T,true>,T,Dim>
+    {
+    typedef vec_traits_defaults<test_qvm::vector<Tag,Dim,T,true>,T,Dim> base;
 
-            template <int I>
-            static
-            typename base::scalar_type &
-            write_element( typename base::vec_type & v )
-                {
-                BOOST_QVM_STATIC_ASSERT(I>=0);
-                BOOST_QVM_STATIC_ASSERT(I<Dim);
-                return v.a[I];
-                }
-
-            using base::write_element_idx;
-            };
-
-        template <class Tag,int Dim,class T>
-        struct
-        vec_traits< test_qvm::vector<Tag,Dim,T,false> >
-            {
-            typedef test_qvm::vector<Tag,Dim,T,false> this_vector;
-            typedef T scalar_type;
-            static int const dim=Dim;
-
-            template <int I>
-            static
-            T
-            read_element( this_vector const & v )
-                {
-                BOOST_QVM_STATIC_ASSERT(I>=0);
-                BOOST_QVM_STATIC_ASSERT(I<Dim);
-                return v.a[I];
-                }
-
-            template <int I>
-            static
-            void
-            write_element( this_vector & v, T s )
-                {
-                BOOST_QVM_STATIC_ASSERT(I>=0);
-                BOOST_QVM_STATIC_ASSERT(I<Dim);
-                v.a[I] = s;
-                }
-
-            static
-            T
-            read_element_idx( int i, this_vector const & v )
-                {
-                BOOST_QVM_ASSERT(i>=0);
-                BOOST_QVM_ASSERT(i<Dim);
-                return v.a[i];
-                }
-
-            static
-            void
-            write_element_idx( int i, this_vector & v, T s )
-                {
-                BOOST_QVM_ASSERT(i>=0);
-                BOOST_QVM_ASSERT(i<Dim);
-                v.a[i] = s;
-                }
-            };
-
-        template <class Tag,class T,int D1,int D2,bool RefWriteElement1,bool RefWriteElement2,int Dim>
-        struct
-        deduce_vec2<test_qvm::vector<Tag,D1,T,RefWriteElement1>,test_qvm::vector<Tag,D2,T,RefWriteElement2>,Dim>
-            {
-            typedef test_qvm::vector<Tag,Dim,T> type;
-            };
+    template <int I>
+    static
+    T &
+    write_element( typename base::vec_type & v )
+        {
+        BOOST_QVM_STATIC_ASSERT(I>=0);
+        BOOST_QVM_STATIC_ASSERT(I<Dim);
+        return v.a[I];
         }
-    }
+
+    using base::write_element_idx;
+    };
+
+template <class Tag,int Dim,class T>
+struct
+vec_traits< test_qvm::vector<Tag,Dim,T,false> >
+    {
+    typedef test_qvm::vector<Tag,Dim,T,false> this_vector;
+    typedef T scalar_type;
+    static int const dim=Dim;
+
+    template <int I>
+    static
+    T
+    read_element( this_vector const & v )
+        {
+        BOOST_QVM_STATIC_ASSERT(I>=0);
+        BOOST_QVM_STATIC_ASSERT(I<Dim);
+        return v.a[I];
+        }
+
+    template <int I>
+    static
+    void
+    write_element( this_vector & v, T s )
+        {
+        BOOST_QVM_STATIC_ASSERT(I>=0);
+        BOOST_QVM_STATIC_ASSERT(I<Dim);
+        v.a[I] = s;
+        }
+
+    static
+    T
+    read_element_idx( int i, this_vector const & v )
+        {
+        BOOST_QVM_ASSERT(i>=0);
+        BOOST_QVM_ASSERT(i<Dim);
+        return v.a[i];
+        }
+
+    static
+    void
+    write_element_idx( int i, this_vector & v, T s )
+        {
+        BOOST_QVM_ASSERT(i>=0);
+        BOOST_QVM_ASSERT(i<Dim);
+        v.a[i] = s;
+        }
+    };
+
+template <class Tag,class T,int D1,int D2,bool RefWriteElement1,bool RefWriteElement2,int Dim>
+struct
+deduce_vec2<test_qvm::vector<Tag,D1,T,RefWriteElement1>,test_qvm::vector<Tag,D2,T,RefWriteElement2>,Dim>
+    {
+    typedef test_qvm::vector<Tag,Dim,T> type;
+    };
+
+} }
 
 namespace
     {

@@ -70,7 +70,7 @@ typename enable_if_c<
     void>::type
 write_vec_element_idx( int i, V & v, typename vec_traits<V>::scalar_type s )
     {
-    vec_traits<V>::template write_element_idx(i, v) = s;
+    vec_traits<V>::write_element_idx(i, v) = s;
     }
 
 template <class V>
@@ -80,7 +80,7 @@ typename enable_if_c<
     void>::type
 write_vec_element_idx( int i, V & v, typename vec_traits<V>::scalar_type s )
     {
-    vec_traits<V>::template write_element_idx(i, v, s);
+    vec_traits<V>::write_element_idx(i, v, s);
     }
 
 } }

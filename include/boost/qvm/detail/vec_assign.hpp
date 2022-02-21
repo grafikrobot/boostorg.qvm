@@ -28,6 +28,7 @@ qvm_detail
         {
         template <class A,class B>
         static
+        BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
         typename enable_if_c<
             vec_write_element_ref<A>::value,
             void>::type
@@ -39,6 +40,7 @@ qvm_detail
 
         template <class A,class B>
         static
+        BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
         typename enable_if_c<
             !vec_write_element_ref<A>::value,
             void>::type
