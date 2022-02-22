@@ -26,6 +26,40 @@ vec
         }
     };
 
+#ifdef __GNUC__
+
+template <>
+struct
+vec<float,4>
+    {
+    typedef float v4sf __attribute__ ((vector_size (16)));
+    v4sf a;
+    template <class R>
+    operator R() const
+        {
+        R r;
+        assign(r,*this);
+        return r;
+        }
+    };
+
+template <>
+struct
+vec<double,4>
+    {
+    typedef double v4sd __attribute__ ((vector_size (32)));
+    v4sd a;
+    template <class R>
+    operator R() const
+        {
+        R r;
+        assign(r,*this);
+        return r;
+        }
+    };
+
+#endif
+
 template <class V>
 struct vec_traits;
 
@@ -51,12 +85,12 @@ vec_traits< vec<T,Dim> >
     template <int I>
     static
     BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
-    scalar_type &
-    write_element( this_vector & x )
+    void
+    write_element( this_vector & x, scalar_type s )
         {
         BOOST_QVM_STATIC_ASSERT(I>=0);
         BOOST_QVM_STATIC_ASSERT(I<dim);
-        return x.a[I];
+        x.a[I] = s;
         }
 
     static
@@ -71,12 +105,12 @@ vec_traits< vec<T,Dim> >
 
     static
     BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
-    scalar_type &
-    write_element_idx( int i, this_vector & x )
+    void
+    write_element_idx( int i, this_vector & x, scalar_type s )
         {
         BOOST_QVM_ASSERT(i>=0);
         BOOST_QVM_ASSERT(i<dim);
-        return x.a[i];
+        x.a[i] = s;
         }
     };
 
