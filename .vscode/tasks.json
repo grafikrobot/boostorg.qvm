@@ -28,9 +28,6 @@
 			},
 			"label": "Build all unit tests and examples (debug)",
 			"type": "shell",
-			"dependsOn": [
-				"Generate headers"
-			],
 			"command": "cd ${workspaceRoot}/bld/debug && ninja && cd ${workspaceRoot}/bld/debug_qvm_hpp && ninja && cd ${workspaceRoot}/bld/debug_qvm_lite_hpp && ninja",
 			"problemMatcher": {
 				"base": "$gcc",
