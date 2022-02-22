@@ -31,28 +31,27 @@ is_mat
 namespace
 qvm_detail
     {
-    struct mtr_dispatch_type1 { int a[1]; };
-    struct mtr_dispatch_type2 { int a[2]; };
-
-    template <class T, class U>
-    mtr_dispatch_type1 mtr_dispatch(T (*)(U));
-    mtr_dispatch_type2 mtr_dispatch(...);
+    template <class T, T>
+    struct
+    mtr_dispatch_yes
+        {
+        char x, y;
+        };
     }
 
-template <class,class=void>
-struct
+template <class T>
+class
 mat_write_element_ref
     {
-    static bool const value = false;
-    };
+    template <class U>
+    static qvm_detail::mtr_dispatch_yes<typename mat_traits<U>::scalar_type & (*)( U & ), &mat_traits<U>::template write_element<0,0> > check(int);
 
-template <class T>
-struct
-mat_write_element_ref<T,
-    typename enable_if_c<
-        sizeof(qvm_detail::mtr_dispatch(&mat_traits<T>::template write_element<0,0>)) == sizeof(qvm_detail::mtr_dispatch_type1)>::type>
-    {
-    static bool const value = true;
+    template <class>
+    static char check(long);
+
+    public:
+
+    static bool const value = sizeof(check<T>(0)) > 1;
     };
 
 template <int R, int C, class M>

@@ -29,28 +29,27 @@ is_quat
 namespace
 qvm_detail
     {
-    struct qtr_dispatch_type1 { int a[1]; };
-    struct qtr_dispatch_type2 { int a[2]; };
-
-    template <class T, class U>
-    qtr_dispatch_type1 qtr_dispatch(T (*)(U));
-    qtr_dispatch_type2 qtr_dispatch(...);
+    template <class T, T>
+    struct
+    qtr_dispatch_yes
+        {
+        char x, y;
+        };
     }
 
-template <class,class=void>
-struct
+template <class T>
+class
 quat_write_element_ref
     {
-    static bool const value = false;
-    };
+    template <class U>
+    static qvm_detail::qtr_dispatch_yes<typename quat_traits<U>::scalar_type & (*)( U & ), &quat_traits<U>::template write_element<0> > check(int);
 
-template <class T>
-struct
-quat_write_element_ref<T,
-    typename enable_if_c<
-        sizeof(qvm_detail::qtr_dispatch(&quat_traits<T>::template write_element<0>)) == sizeof(qvm_detail::qtr_dispatch_type1)>::type>
-    {
-    static bool const value = true;
+    template <class>
+    static char check(long);
+
+    public:
+
+    static bool const value = sizeof(check<T>(0)) > 1;
     };
 
 template <int I, class Q>
