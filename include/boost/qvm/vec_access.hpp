@@ -36,12 +36,9 @@ qvm_detail
     struct
     v_element_access
         {
-        template <class Scalar>
         BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
-        typename enable_if_c<
-            is_scalar<Scalar>::value,
-            void>::type
-        operator=( Scalar s )
+        void
+        operator=( typename vec_traits<V>::scalar_type s )
             {
             vec_traits<V>::template write_element<I>(*reinterpret_cast<V *>(this), s);
             }

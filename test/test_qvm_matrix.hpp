@@ -6,6 +6,10 @@
 #ifndef BOOST_QVM_9C471450B3A611DEAF56C1F155D89593
 #define BOOST_QVM_9C471450B3A611DEAF56C1F155D89593
 
+#if defined(BOOST_QVM_TEST_SINGLE_HEADER) && !defined(BOOST_QVM_TEST_SINGLE_HEADER)
+#   define BOOST_QVM_TEST_REF_WRITE_ELEMENT
+#endif
+
 #include <boost/qvm/mat_traits_defaults.hpp>
 #include <boost/qvm/deduce_mat.hpp>
 #include <boost/qvm/assert.hpp>
@@ -14,7 +18,7 @@
 namespace
 test_qvm
     {
-    template <class Tag,int Rows,int Cols,class T=float,bool RefWriteElement=((Rows+Cols)%2)>
+    template <class Tag,int Rows,int Cols,class T=float>
     struct
     matrix
         {
@@ -40,12 +44,14 @@ test_qvm
 
 namespace boost { namespace qvm {
 
+#ifdef BOOST_QVM_TEST_REF_WRITE_ELEMENT
+
 template <class Tag,int Rows,int Cols,class T>
 struct
-mat_traits< test_qvm::matrix<Tag,Rows,Cols,T,true> >:
-    mat_traits_defaults<test_qvm::matrix<Tag,Rows,Cols,T,true>,T,Rows,Cols>
+mat_traits< test_qvm::matrix<Tag,Rows,Cols,T> >:
+    mat_traits_defaults<test_qvm::matrix<Tag,Rows,Cols,T>,T,Rows,Cols>
     {
-    typedef mat_traits_defaults<test_qvm::matrix<Tag,Rows,Cols,T,true>,T,Rows,Cols> base;
+    typedef mat_traits_defaults<test_qvm::matrix<Tag,Rows,Cols,T>,T,Rows,Cols> base;
 
     template <int R,int C>
     static
@@ -64,11 +70,13 @@ mat_traits< test_qvm::matrix<Tag,Rows,Cols,T,true> >:
     using base::write_element_idx;
     };
 
+#else
+
 template <class Tag,int Rows,int Cols,class T>
 struct
-mat_traits< test_qvm::matrix<Tag,Rows,Cols,T,false> >
+mat_traits< test_qvm::matrix<Tag,Rows,Cols,T> >
     {
-    typedef test_qvm::matrix<Tag,Rows,Cols,T,false> this_matrix;
+    typedef test_qvm::matrix<Tag,Rows,Cols,T> this_matrix;
     typedef T scalar_type;
     static int const rows = Rows;
     static int const cols = Cols;
@@ -120,9 +128,11 @@ mat_traits< test_qvm::matrix<Tag,Rows,Cols,T,false> >
         }
     };
 
-template <class Tag,class T,int R1,int C1,int R2,int C2,bool RefWriteElement1,bool RefWriteElement2,int Rows,int Cols>
+#endif
+
+template <class Tag,class T,int R1,int C1,int R2,int C2,int Rows,int Cols>
 struct
-deduce_mat2<test_qvm::matrix<Tag,R1,C1,T,RefWriteElement1>,test_qvm::matrix<Tag,R2,C2,T,RefWriteElement2>,Rows,Cols>
+deduce_mat2<test_qvm::matrix<Tag,R1,C1,T>,test_qvm::matrix<Tag,R2,C2,T>,Rows,Cols>
     {
     typedef test_qvm::matrix<Tag,Rows,Cols,T> type;
     };

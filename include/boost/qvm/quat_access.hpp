@@ -14,9 +14,32 @@
 
 namespace boost { namespace qvm {
 
+template <class Q> BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_TRIVIAL typename enable_if_c<is_quat<Q>::value,typename quat_traits<Q>::scalar_type>::type S( Q const & a ) { return quat_traits<Q>::template read_element<0>(a); }
+template <class Q> BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_TRIVIAL typename enable_if_c<is_quat<Q>::value,typename quat_traits<Q>::scalar_type>::type X( Q const & a ) { return quat_traits<Q>::template read_element<1>(a); }
+template <class Q> BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_TRIVIAL typename enable_if_c<is_quat<Q>::value,typename quat_traits<Q>::scalar_type>::type Y( Q const & a ) { return quat_traits<Q>::template read_element<2>(a); }
+template <class Q> BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_TRIVIAL typename enable_if_c<is_quat<Q>::value,typename quat_traits<Q>::scalar_type>::type Z( Q const & a ) { return quat_traits<Q>::template read_element<3>(a); }
+
 namespace
 qvm_detail
     {
+    template <int I,class Q>
+    struct
+    q_element_access
+        {
+        BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
+        void
+        operator=( typename quat_traits<Q>::scalar_type s )
+            {
+            quat_traits<Q>::template write_element<I>(*reinterpret_cast<Q *>(this), s);
+            }
+
+        BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
+        operator typename vec_traits<Q>::scalar_type() const
+            {
+            return quat_traits<Q>::template read_element<I>(*reinterpret_cast<Q const *>(this));
+            }
+        };
+
     template <class Q>
     struct
     quat_v_
@@ -138,15 +161,15 @@ V( Q & a )
     return reinterpret_cast<qvm_detail::quat_v_<Q> &>(a);
     }
 
-template <class Q> BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_TRIVIAL typename enable_if_c<is_quat<Q>::value,typename quat_traits<Q>::scalar_type>::type S( Q const & a ) { return quat_traits<Q>::template read_element<0>(a); }
-template <class Q> BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_TRIVIAL typename enable_if_c<is_quat<Q>::value,typename quat_traits<Q>::scalar_type>::type X( Q const & a ) { return quat_traits<Q>::template read_element<1>(a); }
-template <class Q> BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_TRIVIAL typename enable_if_c<is_quat<Q>::value,typename quat_traits<Q>::scalar_type>::type Y( Q const & a ) { return quat_traits<Q>::template read_element<2>(a); }
-template <class Q> BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_TRIVIAL typename enable_if_c<is_quat<Q>::value,typename quat_traits<Q>::scalar_type>::type Z( Q const & a ) { return quat_traits<Q>::template read_element<3>(a); }
+template <class Q> BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_TRIVIAL typename enable_if_c<is_quat<Q>::value && quat_write_element_ref<Q>::value,typename quat_traits<Q>::scalar_type &>::type S( Q & a ) { return quat_traits<Q>::template write_element<0>(a); }
+template <class Q> BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_TRIVIAL typename enable_if_c<is_quat<Q>::value && quat_write_element_ref<Q>::value,typename quat_traits<Q>::scalar_type &>::type X( Q & a ) { return quat_traits<Q>::template write_element<1>(a); }
+template <class Q> BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_TRIVIAL typename enable_if_c<is_quat<Q>::value && quat_write_element_ref<Q>::value,typename quat_traits<Q>::scalar_type &>::type Y( Q & a ) { return quat_traits<Q>::template write_element<2>(a); }
+template <class Q> BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_TRIVIAL typename enable_if_c<is_quat<Q>::value && quat_write_element_ref<Q>::value,typename quat_traits<Q>::scalar_type &>::type Z( Q & a ) { return quat_traits<Q>::template write_element<3>(a); }
 
-template <class Q> BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_TRIVIAL typename enable_if_c<is_quat<Q>::value,typename quat_traits<Q>::scalar_type &>::type S( Q & a ) { return quat_traits<Q>::template write_element<0>(a); }
-template <class Q> BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_TRIVIAL typename enable_if_c<is_quat<Q>::value,typename quat_traits<Q>::scalar_type &>::type X( Q & a ) { return quat_traits<Q>::template write_element<1>(a); }
-template <class Q> BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_TRIVIAL typename enable_if_c<is_quat<Q>::value,typename quat_traits<Q>::scalar_type &>::type Y( Q & a ) { return quat_traits<Q>::template write_element<2>(a); }
-template <class Q> BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_TRIVIAL typename enable_if_c<is_quat<Q>::value,typename quat_traits<Q>::scalar_type &>::type Z( Q & a ) { return quat_traits<Q>::template write_element<3>(a); }
+template <class Q> BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_TRIVIAL typename enable_if_c<is_quat<Q>::value && !quat_write_element_ref<Q>::value,qvm_detail::q_element_access<0,Q> &>::type S( Q & a ) { return *reinterpret_cast<qvm_detail::q_element_access<0, Q> *>(&a); }
+template <class Q> BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_TRIVIAL typename enable_if_c<is_quat<Q>::value && !quat_write_element_ref<Q>::value,qvm_detail::q_element_access<1,Q> &>::type X( Q & a ) { return *reinterpret_cast<qvm_detail::q_element_access<1, Q> *>(&a); }
+template <class Q> BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_TRIVIAL typename enable_if_c<is_quat<Q>::value && !quat_write_element_ref<Q>::value,qvm_detail::q_element_access<2,Q> &>::type Y( Q & a ) { return *reinterpret_cast<qvm_detail::q_element_access<2, Q> *>(&a); }
+template <class Q> BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_TRIVIAL typename enable_if_c<is_quat<Q>::value && !quat_write_element_ref<Q>::value,qvm_detail::q_element_access<3,Q> &>::type Z( Q & a ) { return *reinterpret_cast<qvm_detail::q_element_access<3, Q> *>(&a); }
 
 } }
 

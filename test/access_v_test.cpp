@@ -125,10 +125,10 @@ check_write()
 int
 main()
     {
-    check_read(test_qvm::vector<V1,10,float,true>(0,1));
-    check_read(test_qvm::vector<V1,10,float,false>(0,1));
-    check_write<test_qvm::vector<V1,10,float,true> >();
-    check_write<test_qvm::vector<V1,10,float,false> >();
-    check_write_ref<test_qvm::vector<V1,10,float,true> >();
+    check_read(test_qvm::vector<V1,10,float>(0,1));
+    check_write<test_qvm::vector<V1,10,float> >();
+#ifdef BOOST_QVM_TEST_REF_WRITE_ELEMENT
+    check_write_ref<test_qvm::vector<V1,10,float> >();
+#endif
     return boost::report_errors();
     }

@@ -24,11 +24,13 @@ main()
     BOOST_TEST(mat_traits<M>::read_element_idx(1,0,m)==m.a[1][0]);
     BOOST_TEST(mat_traits<M>::read_element_idx(1,1,m)==m.a[1][1]);
     BOOST_TEST(mat_traits<M>::read_element_idx(1,2,m)==m.a[1][2]);
+#ifdef BOOST_QVM_TEST_REF_WRITE_ELEMENT
     BOOST_TEST(&mat_traits<M>::write_element_idx(0,0,m)==&m.a[0][0]);
     BOOST_TEST(&mat_traits<M>::write_element_idx(0,1,m)==&m.a[0][1]);
     BOOST_TEST(&mat_traits<M>::write_element_idx(0,2,m)==&m.a[0][2]);
     BOOST_TEST(&mat_traits<M>::write_element_idx(1,0,m)==&m.a[1][0]);
     BOOST_TEST(&mat_traits<M>::write_element_idx(1,1,m)==&m.a[1][1]);
     BOOST_TEST(&mat_traits<M>::write_element_idx(1,2,m)==&m.a[1][2]);
+#endif
     return boost::report_errors();
     }

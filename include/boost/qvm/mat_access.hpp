@@ -121,12 +121,9 @@ qvm_detail
     struct
     m_element_access
         {
-        template <class Scalar>
         BOOST_QVM_CONSTEXPR BOOST_QVM_INLINE_CRITICAL
-        typename enable_if_c<
-            is_scalar<Scalar>::value,
-            void>::type
-        operator=( Scalar s )
+        void
+        operator=( typename mat_traits<M>::scalar_type s )
             {
             mat_traits<M>::template write_element<R,C>(*reinterpret_cast<M *>(this), s);
             }

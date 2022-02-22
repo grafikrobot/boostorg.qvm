@@ -388,7 +388,7 @@ operator/( A const & a, B b )
     typedef typename deduce_vec2<A,B,vec_traits<A>::dim>::type R;
     R r;
     for( int i=0; i!=vec_traits<A>::dim; ++i )
-        vec_traits<R>::write_element_idx(i,r)=vec_traits<A>::read_element_idx(i,a)/b;
+        write_vec_element_idx(i,r,vec_traits<A>::read_element_idx(i,a)/b);
     return r;
     }
 
@@ -562,7 +562,7 @@ operator-( A const & a )
     typedef typename deduce_vec<A>::type R;
     R r;
     for( int i=0; i!=vec_traits<A>::dim; ++i )
-        vec_traits<R>::write_element_idx(i,r)=-vec_traits<A>::read_element_idx(i,a);
+        write_vec_element_idx(i,r,-vec_traits<A>::read_element_idx(i,a));
     return r;
     }
 
@@ -591,7 +591,7 @@ operator-( A const & a, B const & b )
     typedef typename deduce_vec2<A,B,vec_traits<A>::dim>::type R;
     R r;
     for( int i=0; i!=vec_traits<A>::dim; ++i )
-        vec_traits<R>::write_element_idx(i,r)=vec_traits<A>::read_element_idx(i,a)-vec_traits<B>::read_element_idx(i,b);
+        write_vec_element_idx(i,r,vec_traits<A>::read_element_idx(i,a)-vec_traits<B>::read_element_idx(i,b));
     return r;
     }
 
@@ -645,7 +645,7 @@ operator*( A const & a, B b )
     typedef typename deduce_vec2<A,B,vec_traits<A>::dim>::type R;
     R r;
     for( int i=0; i!=vec_traits<A>::dim; ++i )
-        vec_traits<R>::write_element_idx(i,r)=vec_traits<A>::read_element_idx(i,a)*b;
+        write_vec_element_idx(i,r,vec_traits<A>::read_element_idx(i,a)*b);
     return r;
     }
 
@@ -673,7 +673,7 @@ operator*( A a, B const & b )
     typedef typename deduce_vec2<A,B,vec_traits<B>::dim>::type R;
     R r;
     for( int i=0; i!=vec_traits<B>::dim; ++i )
-        vec_traits<R>::write_element_idx(i,r)=a*vec_traits<B>::read_element_idx(i,b);
+        write_vec_element_idx(i,r,a*vec_traits<B>::read_element_idx(i,b));
     return r;
     }
 
@@ -739,7 +739,7 @@ normalized( A const & a )
     typedef typename deduce_vec<A>::type R;
     R r;
     for( int i=0; i!=vec_traits<A>::dim; ++i )
-        vec_traits<R>::write_element_idx(i,r)=vec_traits<A>::read_element_idx(i,a)*rm;
+        write_vec_element_idx(i,r,vec_traits<A>::read_element_idx(i,a)*rm);
     return r;
     }
 
@@ -762,7 +762,7 @@ normalize( A & a )
         BOOST_QVM_THROW_EXCEPTION(zero_magnitude_error());
     T rm=scalar_traits<T>::value(1)/sqrt(m);
     for( int i=0; i!=vec_traits<A>::dim; ++i )
-        vec_traits<A>::write_element_idx(i,a)*=rm;
+        write_vec_element_idx(i,a,vec_traits<A>::read_element_idx(i,a)*rm);
     }
 
 ////////////////////////////////////////////////
@@ -817,7 +817,7 @@ operator+( A const & a, B const & b )
     typedef typename deduce_vec2<A,B,vec_traits<A>::dim>::type R;
     R r;
     for( int i=0; i!=vec_traits<A>::dim; ++i )
-        vec_traits<R>::write_element_idx(i,r)=vec_traits<A>::read_element_idx(i,a)+vec_traits<B>::read_element_idx(i,b);
+        write_vec_element_idx(i,r,vec_traits<A>::read_element_idx(i,a)+vec_traits<B>::read_element_idx(i,b));
     return r;
     }
 

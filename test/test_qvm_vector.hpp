@@ -6,6 +6,10 @@
 #ifndef BOOST_QVM_02C176D6B3AB11DE979F9A0D56D89593
 #define BOOST_QVM_02C176D6B3AB11DE979F9A0D56D89593
 
+#if defined(BOOST_QVM_TEST_SINGLE_HEADER) && !defined(BOOST_QVM_TEST_SINGLE_HEADER)
+#   define BOOST_QVM_TEST_REF_WRITE_ELEMENT
+#endif
+
 #include <boost/qvm/vec_traits_defaults.hpp>
 #include <boost/qvm/deduce_vec.hpp>
 #include <boost/qvm/assert.hpp>
@@ -14,7 +18,7 @@
 namespace
 test_qvm
     {
-    template <class Tag,int Dim,class T=float,bool RefWriteElement=(Dim%2)>
+    template <class Tag,int Dim,class T=float>
     struct
     vector
         {
@@ -29,9 +33,9 @@ test_qvm
             }
         };
 
-    template <int Dim,class Tag1,class T1,bool RefWriteElement1,class Tag2,class T2,bool RefWriteElement2>
+    template <int Dim,class Tag1,class T1,class Tag2,class T2>
     void
-    dump_ab( vector<Tag1,Dim,T1,RefWriteElement1> const & a, vector<Tag2,Dim,T2,RefWriteElement2> const & b )
+    dump_ab( vector<Tag1,Dim,T1> const & a, vector<Tag2,Dim,T2> const & b )
         {
         detail::dump_ab(a.a,b.a);
         }
@@ -39,12 +43,14 @@ test_qvm
 
 namespace boost { namespace qvm {
 
+#ifdef BOOST_QVM_TEST_REF_WRITE_ELEMENT
+
 template <class Tag,int Dim,class T>
 struct
-vec_traits< test_qvm::vector<Tag,Dim,T,true> >:
-    vec_traits_defaults<test_qvm::vector<Tag,Dim,T,true>,T,Dim>
+vec_traits< test_qvm::vector<Tag,Dim,T> >:
+    vec_traits_defaults<test_qvm::vector<Tag,Dim,T>,T,Dim>
     {
-    typedef vec_traits_defaults<test_qvm::vector<Tag,Dim,T,true>,T,Dim> base;
+    typedef vec_traits_defaults<test_qvm::vector<Tag,Dim,T>,T,Dim> base;
 
     template <int I>
     static
@@ -59,11 +65,13 @@ vec_traits< test_qvm::vector<Tag,Dim,T,true> >:
     using base::write_element_idx;
     };
 
+#else
+
 template <class Tag,int Dim,class T>
 struct
-vec_traits< test_qvm::vector<Tag,Dim,T,false> >
+vec_traits< test_qvm::vector<Tag,Dim,T> >
     {
-    typedef test_qvm::vector<Tag,Dim,T,false> this_vector;
+    typedef test_qvm::vector<Tag,Dim,T> this_vector;
     typedef T scalar_type;
     static int const dim=Dim;
 
@@ -106,9 +114,11 @@ vec_traits< test_qvm::vector<Tag,Dim,T,false> >
         }
     };
 
-template <class Tag,class T,int D1,int D2,bool RefWriteElement1,bool RefWriteElement2,int Dim>
+#endif
+
+template <class Tag,class T,int D1,int D2,int Dim>
 struct
-deduce_vec2<test_qvm::vector<Tag,D1,T,RefWriteElement1>,test_qvm::vector<Tag,D2,T,RefWriteElement2>,Dim>
+deduce_vec2<test_qvm::vector<Tag,D1,T>,test_qvm::vector<Tag,D2,T>,Dim>
     {
     typedef test_qvm::vector<Tag,Dim,T> type;
     };
