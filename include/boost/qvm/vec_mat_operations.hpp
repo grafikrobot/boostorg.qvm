@@ -40,7 +40,7 @@ operator*( A const & a, B const & b )
         Tr x(scalar_traits<Tr>::value(0));
         for( int j=0; j<mat_traits<A>::cols; ++j )
             x += mat_traits<A>::read_element_idx(i,j,a)*vec_traits<B>::read_element_idx(j,b);
-        vec_traits<R>::write_element_idx(i,r) = x;
+        write_vec_element_idx(i,r,x);
         }
     return r;
     }
@@ -73,7 +73,7 @@ operator*( A const & a, B const & b )
         Tr x(scalar_traits<Tr>::value(0));
         for( int j=0; j<mat_traits<B>::rows; ++j )
             x += vec_traits<A>::read_element_idx(j,a)*mat_traits<B>::read_element_idx(j,i,b);
-        vec_traits<R>::write_element_idx(i,r) = x;
+        write_vec_element_idx(i,r,x);
         }
     return r;
     }
