@@ -21,6 +21,7 @@ int main()
 #   include <boost/qvm/vec_access.hpp>
 #   include <boost/qvm/vec_operations.hpp>
 #   include <boost/qvm/vec.hpp>
+#   include <boost/qvm/swizzle4.hpp>
 #endif
 
 #include <boost/qvm/vec_traits_gnuc.hpp>
@@ -95,6 +96,21 @@ main()
         BOOST_TEST_EQ(Z(r2), -4);
         BOOST_TEST_EQ(W(r2), -4);
     }
+#ifndef BOOST_QVM_TEST_SINGLE_HEADER
+    {
+        vec<float,4> v1 = {{1, 2, 3, 4}};
+        __v4sf v2 = {0, 0, 0, 0};
+        BOOST_TEST_EQ(X(v2), 0);
+        BOOST_TEST_EQ(Y(v2), 0);
+        BOOST_TEST_EQ(Z(v2), 0);
+        BOOST_TEST_EQ(W(v2), 0);
+        WZYX(v2) = v1;
+        BOOST_TEST_EQ(X(v2), 4);
+        BOOST_TEST_EQ(Y(v2), 3);
+        BOOST_TEST_EQ(Z(v2), 2);
+        BOOST_TEST_EQ(W(v2), 1);
+    }
+#endif
     return boost::report_errors();
     }
 
