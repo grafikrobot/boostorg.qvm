@@ -28,7 +28,7 @@
 #define INCLUDE_MATH "boost/qvm/math.hpp"
 #define INCLUDE_THROW_EXCEPTION "boost/qvm/throw_exception.hpp"
 #define INCLUDE_ERROR "boost/qvm/error.hpp"
-#define INCLUDE_INLINE "boost/qvm/inline.hpp"
+#define INCLUDE_CONFIG "boost/qvm/config.hpp"
 #define INCLUDE_M_TRAITS "boost/qvm/mat_traits.hpp"
 #define INCLUDE_V_TRAITS "boost/qvm/vec_traits.hpp"
 #define INCLUDE_Q_TRAITS "boost/qvm/quat_traits.hpp"
@@ -729,7 +729,7 @@ namespace
         assert(r>0);
         assert(c>0);
         header_vr_ma_vb_mult(out,r,c,"operator*");
-        out.require_include(INCLUDE_INLINE);
+        out.require_include(INCLUDE_CONFIG);
         out.require_include(INCLUDE_V_TRAITS);
         out.require_include(INCLUDE_M_TRAITS);
         out.require_include(INCLUDE_ENABLE_IF);
@@ -774,7 +774,7 @@ namespace
         assert(r>0);
         assert(c>0);
         header_vr_va_mb_mult(out,r,c,"operator*");
-        out.require_include(INCLUDE_INLINE);
+        out.require_include(INCLUDE_CONFIG);
         out.require_include(INCLUDE_V_TRAITS);
         out.require_include(INCLUDE_M_TRAITS);
         out.require_include(INCLUDE_ENABLE_IF);
@@ -1145,7 +1145,7 @@ namespace
         {
         header_ma_mb_same_size(out,r,c,"assign");
         out.require_include(INCLUDE_M_TRAITS);
-        out.require_include(INCLUDE_INLINE);
+        out.require_include(INCLUDE_CONFIG);
         out.require_include(INCLUDE_ENABLE_IF);
         std::ostream & g=out.stream();
         g<<TAB1 "{" NL;
@@ -1164,7 +1164,7 @@ namespace
         {
         header_va_vb_same_size(out,d,"assign");
         out.require_include(INCLUDE_V_TRAITS);
-        out.require_include(INCLUDE_INLINE);
+        out.require_include(INCLUDE_CONFIG);
         out.require_include(INCLUDE_ENABLE_IF);
         std::ostream & g=out.stream();
         g<<TAB1 "{" NL;
@@ -1690,7 +1690,7 @@ namespace
     swizzle( output_file & out, int d )
         {
         assert(d>1);
-        out.require_include(INCLUDE_INLINE);
+        out.require_include(INCLUDE_CONFIG);
         out.require_include(INCLUDE_SWIZZLE_TRAITS);
         out.require_include(INCLUDE_ENABLE_IF);
         std::ostream & g=out.stream();

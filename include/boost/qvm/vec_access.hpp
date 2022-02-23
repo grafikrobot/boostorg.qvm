@@ -7,7 +7,7 @@
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/qvm/vec_traits.hpp>
-#include <boost/qvm/inline.hpp>
+#include <boost/qvm/config.hpp>
 #include <boost/qvm/static_assert.hpp>
 #include <boost/qvm/enable_if.hpp>
 

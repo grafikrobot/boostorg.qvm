@@ -8,7 +8,7 @@
 
 #include <boost/qvm/quat_traits.hpp>
 #include <boost/qvm/deduce_vec.hpp>
-#include <boost/qvm/inline.hpp>
+#include <boost/qvm/config.hpp>
 #include <boost/qvm/enable_if.hpp>
 
 namespace boost { namespace qvm {

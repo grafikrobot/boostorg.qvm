@@ -8,7 +8,7 @@
 
 #if defined(__GNUC__) && defined(__SSE__)
 
-#include <boost/qvm/inline.hpp>
+#include <boost/qvm/config.hpp>
 #include <boost/qvm/assert.hpp>
 #include <boost/qvm/static_assert.hpp>
 

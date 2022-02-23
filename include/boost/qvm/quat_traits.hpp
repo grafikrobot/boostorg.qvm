@@ -8,7 +8,7 @@
 
 #include <boost/qvm/is_scalar.hpp>
 #include <boost/qvm/enable_if.hpp>
-#include <boost/qvm/inline.hpp>
+#include <boost/qvm/config.hpp>
 
 namespace boost { namespace qvm {
 
