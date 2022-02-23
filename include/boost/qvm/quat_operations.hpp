@@ -39,7 +39,7 @@ msvc_parse_bug_workaround
     struct
     quats
         {
-        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,is_quat<A>::value && is_quat<B>::value);
+        static bool const value=is_quat<A>::value && is_quat<B>::value;
         };
     }
 

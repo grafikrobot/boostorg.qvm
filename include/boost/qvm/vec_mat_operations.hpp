@@ -19,7 +19,7 @@ qvm_detail
     struct
     mul_mv_defined
         {
-        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
+        static bool const value=false;
         };
     }
 
@@ -52,7 +52,7 @@ qvm_detail
     struct
     mul_vm_defined
         {
-        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
+        static bool const value=false;
         };
     }
 

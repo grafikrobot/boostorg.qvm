@@ -50,7 +50,7 @@ vec_write_element_ref
 
     public:
 
-    BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,sizeof(check<T>(0)) > 1);
+    static bool const value = sizeof(check<T>(0)) > 1;
     };
 
 template <int I, class V>

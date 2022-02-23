@@ -19,7 +19,7 @@ qvm_detail
     struct
     assign_vv_defined
         {
-        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
+        static bool const value=false;
         };
 
     template <int I,int N>
