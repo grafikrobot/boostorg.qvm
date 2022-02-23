@@ -45,7 +45,7 @@ qvm_detail
     struct
     to_string_v_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
 
     template <int I,int DimMinusOne>
@@ -97,7 +97,7 @@ qvm_detail
     struct
     convert_to_v_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -347,7 +347,7 @@ qvm_detail
     struct
     div_eq_vs_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -373,7 +373,7 @@ qvm_detail
     struct
     div_vs_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -401,7 +401,7 @@ qvm_detail
     struct
     dot_vv_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -430,7 +430,7 @@ qvm_detail
     struct
     eq_vv_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -458,7 +458,7 @@ qvm_detail
     struct
     mag_sqr_v_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -489,7 +489,7 @@ qvm_detail
     struct
     mag_v_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -520,7 +520,7 @@ qvm_detail
     struct
     minus_eq_vv_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -547,7 +547,7 @@ qvm_detail
     struct
     minus_v_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -575,7 +575,7 @@ qvm_detail
     struct
     minus_vv_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -604,7 +604,7 @@ qvm_detail
     struct
     mul_eq_vs_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -630,7 +630,7 @@ qvm_detail
     struct
     mul_vs_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -658,7 +658,7 @@ qvm_detail
     struct
     mul_sv_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -686,7 +686,7 @@ qvm_detail
     struct
     neq_vv_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -714,7 +714,7 @@ qvm_detail
     struct
     normalize_v_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -774,7 +774,7 @@ qvm_detail
     struct
     plus_eq_vv_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -801,7 +801,7 @@ qvm_detail
     struct
     plus_vv_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 

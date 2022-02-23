@@ -118,16 +118,16 @@ qvm_detail
     struct
     validate_swizzle_list
         {
-        static bool const value =
-            ((SwizzleList::value)<D) && //don't touch extra (), MSVC parsing bug.
-            validate_swizzle_list<typename SwizzleList::next,D>::value;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,
+            (((SwizzleList::value)<D) && //don't touch extra (), MSVC parsing bug.
+            validate_swizzle_list<typename SwizzleList::next,D>::value));
         };
 
     template <int D>
     struct
     validate_swizzle_list<void,D>
         {
-        static bool const value=true;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,1);
         };
 
     template <class OriginalType,class SwizzleList>

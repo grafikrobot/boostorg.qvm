@@ -47,7 +47,7 @@ boost
         struct
         is_scalar<wrap<T> >
             {
-            static bool const value=true;
+            BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,1);
             };
         template <class S, class T>
         struct

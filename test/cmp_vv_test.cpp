@@ -45,7 +45,7 @@ namespace boost { namespace qvm {
     struct
     is_scalar<test_scalar<T> >
         {
-        static bool const value = is_scalar<T>::value;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,is_scalar<T>::value);
         };
 } }
 

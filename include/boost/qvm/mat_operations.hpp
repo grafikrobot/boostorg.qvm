@@ -48,7 +48,7 @@ qvm_detail
     struct
     to_string_m_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
 
     template <int I,int SizeMinusOne>
@@ -127,7 +127,7 @@ qvm_detail
     struct
     convert_to_m_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -154,7 +154,7 @@ qvm_detail
     struct
     determinant_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -454,7 +454,7 @@ qvm_detail
     struct
     div_eq_ms_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -481,7 +481,7 @@ qvm_detail
     struct
     div_ms_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -510,7 +510,7 @@ qvm_detail
     struct
     eq_mm_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -540,7 +540,7 @@ qvm_detail
     struct
     minus_eq_mm_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -569,7 +569,7 @@ qvm_detail
     struct
     minus_m_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -598,7 +598,7 @@ qvm_detail
     struct
     minus_mm_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -629,7 +629,7 @@ qvm_detail
     struct
     mul_eq_mm_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -670,7 +670,7 @@ qvm_detail
     struct
     mul_eq_ms_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -697,7 +697,7 @@ qvm_detail
     struct
     mul_mm_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -733,7 +733,7 @@ qvm_detail
     struct
     mul_ms_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -762,7 +762,7 @@ qvm_detail
     struct
     mul_sm_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -791,7 +791,7 @@ qvm_detail
     struct
     neq_mm_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -821,7 +821,7 @@ qvm_detail
     struct
     plus_eq_mm_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -850,7 +850,7 @@ qvm_detail
     struct
     plus_mm_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 
@@ -2431,7 +2431,7 @@ qvm_detail
     struct
     inverse_m_defined
         {
-        static bool const value=false;
+        BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,0);
         };
     }
 

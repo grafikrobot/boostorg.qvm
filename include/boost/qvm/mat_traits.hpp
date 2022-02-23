@@ -25,7 +25,7 @@ template <class T>
 struct
 is_mat
     {
-    static bool const value = is_scalar<typename mat_traits<T>::scalar_type>::value && mat_traits<T>::rows>0 && mat_traits<T>::cols>0;
+    BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,is_scalar<typename mat_traits<T>::scalar_type>::value && mat_traits<T>::rows>0 && mat_traits<T>::cols>0);
     };
 
 namespace
@@ -51,7 +51,7 @@ mat_write_element_ref
 
     public:
 
-    static bool const value = sizeof(check<T>(0)) > 1;
+    BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,sizeof(check<T>(0)) > 1);
     };
 
 template <int R, int C, class M>

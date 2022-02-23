@@ -23,7 +23,7 @@ template <class T>
 struct
 is_quat
     {
-    static bool const value = is_scalar<typename quat_traits<T>::scalar_type>::value;
+    BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,is_scalar<typename quat_traits<T>::scalar_type>::value);
     };
 
 namespace
@@ -49,7 +49,7 @@ quat_write_element_ref
 
     public:
 
-    static bool const value = sizeof(check<T>(0)) > 1;
+    BOOST_QVM_STATIC_INTEGRAL_CONSTANT(value,sizeof(check<T>(0)) > 1);
     };
 
 template <int I, class Q>
