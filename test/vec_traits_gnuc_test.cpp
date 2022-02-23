@@ -41,24 +41,18 @@ main()
     {
     using namespace boost::qvm;
     typedef float v2sf __attribute__ ((vector_size(8)));
-    typedef float v3sf __attribute__ ((vector_size(12)));
     typedef float v4sf __attribute__ ((vector_size(16)));
     typedef double v2sd __attribute__ ((vector_size(16)));
-    typedef double v3sd __attribute__ ((vector_size(24)));
     typedef double v4sd __attribute__ ((vector_size(32)));
     BOOST_QVM_STATIC_ASSERT(is_vec<v2sf>::value);
-    BOOST_QVM_STATIC_ASSERT(is_vec<v3sf>::value);
     BOOST_QVM_STATIC_ASSERT(is_vec<v4sf>::value);
     BOOST_QVM_STATIC_ASSERT(is_vec<__v4sf>::value);
     BOOST_QVM_STATIC_ASSERT(is_vec<v2sd>::value);
-    BOOST_QVM_STATIC_ASSERT(is_vec<v3sd>::value);
     BOOST_QVM_STATIC_ASSERT(is_vec<v4sd>::value);
     BOOST_QVM_STATIC_ASSERT(vec_traits<v2sf>::dim==2);
-    BOOST_QVM_STATIC_ASSERT(vec_traits<v3sf>::dim==3);
     BOOST_QVM_STATIC_ASSERT(vec_traits<v4sf>::dim==4);
     BOOST_QVM_STATIC_ASSERT(vec_traits<__v4sf>::dim==4);
     BOOST_QVM_STATIC_ASSERT(vec_traits<v2sd>::dim==2);
-    BOOST_QVM_STATIC_ASSERT(vec_traits<v3sd>::dim==3);
     BOOST_QVM_STATIC_ASSERT(vec_traits<v4sd>::dim==4);
     {
         __v4sf v = { 1, 2, 3, 4 };
