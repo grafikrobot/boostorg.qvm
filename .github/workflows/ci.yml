@@ -137,7 +137,7 @@ jobs:
       - name: Run tests
         run: |
           cd ../boost-root
-          ./b2 -j3 libs/qvm/test toolset=${{matrix.toolset}} cxxstd=${{matrix.cxxstd}} variant=debug,release,debug_qvm_hpp,release_qvm_hpp,debug_qvm_lite_hpp,release_qvm_lite_hpp
+          ./b2 -j3 libs/qvm/test vectorize=on toolset=${{matrix.toolset}} cxxstd=${{matrix.cxxstd}} variant=debug,release,debug_qvm_hpp,release_qvm_hpp,debug_qvm_lite_hpp,release_qvm_lite_hpp
 
   windows:
     strategy:
