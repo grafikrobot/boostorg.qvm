@@ -24,7 +24,8 @@ template <class T>
 struct
 is_vec
     {
-    enum { value = is_scalar<typename vec_traits<T>::scalar_type>::value && vec_traits<T>::dim>0 };
+    // enum { value = is_scalar<typename vec_traits<T>::scalar_type>::value && vec_traits<T>::dim>0 };
+    static bool const value = is_scalar<typename vec_traits<T>::scalar_type>::value && vec_traits<T>::dim>0;
     };
 
 namespace

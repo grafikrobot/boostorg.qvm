@@ -6,7 +6,6 @@
 project
     : requirements
 		<include>../include
-        <toolset>gcc:<cxxflags>-mavx
     ;
 
 variant debug_qvm_hpp : debug : <define>BOOST_QVM_TEST_SINGLE_HEADER="\\\"qvm.hpp\\\"" ;
