@@ -714,6 +714,8 @@ slerp( A const & a, B const & b, C t )
     TR sc=one;
     if( dp < one )
         {
+        if( dp < -one )
+            dp = -one;
         TR const theta = acos(dp);
         TR const invsintheta = one/sin(theta);
         TR const scale = sin(theta*(one-t)) * invsintheta;
