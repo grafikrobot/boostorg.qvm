@@ -15,6 +15,7 @@
 #include <boost/qvm/error.hpp>
 #include <boost/qvm/throw_exception.hpp>
 #include <string>
+#include <cmath>
 
 namespace boost { namespace qvm {
 
@@ -711,19 +712,29 @@ slerp( A const & a, B const & b, C t )
     typedef typename quat_traits<R>::scalar_type TR;
     TR const one = scalar_traits<TR>::value(1);
     TR dp = dot(a,b);
+    assert(!std::isnan(dp));
     TR sc=one;
     if( dp < one )
         {
         if( dp < -one )
             dp = -one;
+        assert(!std::isnan(dp));
         TR const theta = acos(dp);
+        assert(!std::isnan(theta));
         TR const invsintheta = one/sin(theta);
+        assert(!std::isnan(invsintheta));
         TR const scale = sin(theta*(one-t)) * invsintheta;
+        assert(!std::isnan(scale));
         TR const invscale = sin(theta*t) * invsintheta * sc;
-        return a*scale + b*invscale;
+        assert(!std::isnan(invscale));
+        R r = a*scale + b*invscale;
+        return r;
         }
     else
-        return normalized(a+(b-a)*t);
+        {
+        R r = normalized(a+(b-a)*t);
+        return r;
+        }
     }
 
 ////////////////////////////////////////////////
