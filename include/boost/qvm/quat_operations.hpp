@@ -16,6 +16,7 @@
 #include <boost/qvm/throw_exception.hpp>
 #include <string>
 #include <cmath>
+#include <iostream>
 
 namespace boost { namespace qvm {
 
@@ -724,6 +725,8 @@ slerp( A const & a, B const & b, C t )
         TR const invsintheta = one/sin(theta);
         assert(!std::isnan(invsintheta));
         TR const scale = sin(theta*(one-t)) * invsintheta;
+        if( std::isnan(scale) )
+            std::cout << "*** " << theta << ", " << one << ", " << t << ", " << invsintheta << std::endl;
         assert(!std::isnan(scale));
         TR const invscale = sin(theta*t) * invsintheta * sc;
         assert(!std::isnan(invscale));
