@@ -16,7 +16,6 @@
 #include <boost/qvm/throw_exception.hpp>
 #include <string>
 #include <cmath>
-#include <iostream>
 
 namespace boost { namespace qvm {
 
@@ -711,33 +710,15 @@ slerp( A const & a, B const & b, C t )
     {
     typedef typename deduce_quat2<A,B>::type R;
     typedef typename quat_traits<R>::scalar_type TR;
-    TR const one = scalar_traits<TR>::value(1);
     TR dp = dot(a,b);
-    assert(!std::isnan(dp));
-    TR sc=one;
-    if( dp < one )
-        {
-        if( dp < -one )
-            dp = -one;
-        assert(!std::isnan(dp));
-        TR const theta = acos(dp);
-        assert(!std::isnan(theta));
-        TR const invsintheta = one/sin(theta);
-        assert(!std::isnan(invsintheta));
-        TR const scale = sin(theta*(one-t)) * invsintheta;
-        if( std::isnan(scale) )
-            std::cout << "*** " << theta << ", " << one << ", " << t << ", " << invsintheta << std::endl;
-        assert(!std::isnan(scale));
-        TR const invscale = sin(theta*t) * invsintheta * sc;
-        assert(!std::isnan(invscale));
-        R r = a*scale + b*invscale;
-        return r;
-        }
-    else
-        {
-        R r = normalized(a+(b-a)*t);
-        return r;
-        }
+    TR const one = scalar_traits<TR>::value(1);
+    if( dp >= one )
+        return normalized(a+(b-a)*t);
+    if( dp < -one )
+        dp = -one;
+    double theta_0 = acos(dp);
+    double theta = theta_0*t;
+    return a*cos(theta) + normalized(b-a*dp)*sin(theta);
     }
 
 ////////////////////////////////////////////////
