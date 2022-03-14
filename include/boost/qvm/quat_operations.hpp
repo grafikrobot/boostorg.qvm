@@ -710,9 +710,10 @@ slerp( A const & a, B const & b, C t )
     {
     typedef typename deduce_quat2<A,B>::type R;
     typedef typename quat_traits<R>::scalar_type TR;
-    TR dp = dot(a,b);
     TR const one = scalar_traits<TR>::value(1);
-    if( dp >= one )
+    TR const threshold = one - one / scalar_traits<TR>::value(2000); //0.9995
+    TR dp = dot(a,b);
+    if( dp > threshold )
         return normalized(a+(b-a)*t);
     if( dp < -one )
         dp = -one;
