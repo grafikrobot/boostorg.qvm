@@ -24,11 +24,11 @@ namespace
             {
             test_qvm::matrix<M1,Dim,Dim> const m1=roty_mat<Dim>(r);
             test_qvm::rotation_y(m1.b,r);
-            BOOST_QVM_TEST_CLOSE(m1.a,m1.b,0.000001f);
+            BOOST_QVM_TEST_CLOSE(m1.a,m1.b,0.0001f);
             test_qvm::matrix<M1,Dim,Dim> m2(42,1);
             set_roty(m2,r);
             test_qvm::rotation_y(m2.b,r);
-            BOOST_QVM_TEST_CLOSE(m2.a,m2.b,0.000001f);
+            BOOST_QVM_TEST_CLOSE(m2.a,m2.b,0.0001f);
             test_qvm::matrix<M1,Dim,Dim> m3(42,1);
             test_qvm::matrix<M1,Dim,Dim> r1=m3*m1;
             rotate_y(m3,r);
