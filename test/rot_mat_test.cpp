@@ -222,15 +222,15 @@ namespace
                 mat<float,D,D> const m2 = rotz_mat<D>(z1) * rotx_mat<D>(x2) * roty_mat<D>(y3);
                     {
                     mat<float,D,D> m1 = rot_mat_zxy<D>(z1,x2,y3);
-                    BOOST_QVM_TEST_CLOSE(m1.a,m2.a,0.007f);
+                    BOOST_QVM_TEST_CLOSE(m1.a,m2.a,0.01f);
                     }
                     {
                     mat<float,D,D> m1; set_rot_zxy(m1,z1,x2,y3);
-                    BOOST_QVM_TEST_CLOSE(m1.a,m2.a,0.007f);
+                    BOOST_QVM_TEST_CLOSE(m1.a,m2.a,0.01f);
                     }
                     {
                     mat<float,D,D> m1 = identity_mat<float,D>(); rotate_zxy(m1,z1,x2,y3);
-                    BOOST_QVM_TEST_CLOSE(m1.a,m2.a,0.007f);
+                    BOOST_QVM_TEST_CLOSE(m1.a,m2.a,0.01f);
                     }
                 }
         }
