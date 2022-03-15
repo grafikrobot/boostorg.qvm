@@ -69,8 +69,21 @@ qvm_detail
     }
 
 template <class> struct vec_traits;
+template <class> struct is_vec;
 
-#define BOOST_QVM_GNUC_VEC_TYPE(T,D) template <> struct vec_traits<T __attribute__((vector_size(sizeof(T)*D)))>: qvm_detail::vec_traits_gnuc_impl<T __attribute__((vector_size(sizeof(T)*D))),T,D> { };
+#define BOOST_QVM_GNUC_VEC_TYPE(T,D)\
+    template <>\
+    struct\
+    vec_traits<T __attribute__((vector_size(sizeof(T)*D)))>:\
+        qvm_detail::vec_traits_gnuc_impl<T __attribute__((vector_size(sizeof(T)*D))),T,D>\
+        {\
+        };\
+    template <>\
+    struct\
+    is_vec<T __attribute__((vector_size(sizeof(T)*D)))>\
+        {\
+        enum { value = true };\
+        };
 
 BOOST_QVM_GNUC_VEC_TYPE(float,2);
 BOOST_QVM_GNUC_VEC_TYPE(float,4);
