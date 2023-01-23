@@ -206,19 +206,17 @@ local windows_pipeline(name, image, environment, arch = "amd64") =
     ),
 
     linux_pipeline(
-        "Linux 20.04 Clang 14 UBSAN",
+        "Linux 22.04 Clang 14 UBSAN",
         "cppalliance/droneubuntu2004:1",
         { TOOLSET: 'clang', COMPILER: 'clang++-14', CXXSTD: '03,11,14,17,20' } + ubsan,
         "clang-14",
-        ["deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main"],
     ),
 
     linux_pipeline(
-        "Linux 20.04 Clang 14 ASAN",
+        "Linux 22.04 Clang 14 ASAN",
         "cppalliance/droneubuntu2004:1",
         { TOOLSET: 'clang', COMPILER: 'clang++-14', CXXSTD: '03,11,14,17,20' } + asan,
         "clang-14",
-        ["deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main"],
     ),
 
     macos_pipeline(
