@@ -55,11 +55,11 @@ namespace
                         BOOST_QVM_TEST_CLOSE(qz.a,qsz.a,0.001f);
                         }
                         {
-                        test_qvm::quaternion<Q1> const x1=slerp(qx1,qx2,t);
+                        test_qvm::quaternion<Q1> const x1=slerp180(qx1,qx2,t);
                         test_qvm::quaternion<Q1> const x2=slerp360(dot(qx1,qx2)<0 ? -qx1 : qx1,qx2,t);
-                        test_qvm::quaternion<Q1> const y1=slerp(qy1,qy2,t);
+                        test_qvm::quaternion<Q1> const y1=slerp180(qy1,qy2,t);
                         test_qvm::quaternion<Q1> const y2=slerp360(dot(qy1,qy2)<0 ? -qy1 : qy1,qy2,t);
-                        test_qvm::quaternion<Q1> const z1=slerp(qz1,qz2,t);
+                        test_qvm::quaternion<Q1> const z1=slerp180(qz1,qz2,t);
                         test_qvm::quaternion<Q1> const z2=slerp360(dot(qz1,qz2)<0 ? -qz1 : qz1,qz2,t);
                         BOOST_QVM_TEST_CLOSE(x1.a,x2.a,0.001f);
                         BOOST_QVM_TEST_CLOSE(y1.a,y2.a,0.001f);
