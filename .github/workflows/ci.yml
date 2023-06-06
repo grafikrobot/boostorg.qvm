@@ -133,8 +133,25 @@ jobs:
             os: ubuntu-22.04
             install: clang-14
           - toolset: clang
+            compiler: clang++-15
+            cxxstd: "03,11,14,17,20,2b"
+            os: ubuntu-22.04
+            install: clang-15
+          - toolset: clang
+            compiler: clang++-16
+            cxxstd: "03,11,14,17,20,2b"
+            os: ubuntu-latest
+            container: ubuntu:23.04
+            install: clang-16
+          - toolset: clang
             cxxstd: "03,11,14,17,2a"
             os: macos-11
+          - toolset: clang
+            cxxstd: "03,11,14,17,20,2b"
+            os: macos-12
+          - toolset: clang
+            cxxstd: "03,11,14,17,20,2b"
+            os: macos-13
 
     runs-on: ${{matrix.os}}
     container: ${{matrix.container}}
@@ -154,7 +171,9 @@ jobs:
 
       - name: Install packages
         if: matrix.install
-        run: sudo apt-get -y install ${{matrix.install}}
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install ${{matrix.install}}
 
       - name: Setup Boost
         run: |
@@ -174,7 +193,7 @@ jobs:
           cd boost-root
           cp -r $GITHUB_WORKSPACE/* libs/$LIBRARY
           git submodule update --init tools/boostdep
-          python tools/boostdep/depinst/depinst.py --git_args "--jobs 3" $LIBRARY
+          python3 tools/boostdep/depinst/depinst.py --git_args "--jobs 3" $LIBRARY
           ./bootstrap.sh
           ./b2 -d0 headers
 
@@ -186,8 +205,8 @@ jobs:
       - name: Generate headers
         run: |
           cd ../boost-root/libs/qvm
-          python gen/generate_single_header.py -i include/boost/qvm/all.hpp -p include -o test/qvm.hpp boost/qvm
-          python gen/generate_single_header.py -i include/boost/qvm/lite.hpp -p include -o test/qvm_lite.hpp boost/qvm
+          python3 gen/generate_single_header.py -i include/boost/qvm/all.hpp -p include -o test/qvm.hpp boost/qvm
+          python3 gen/generate_single_header.py -i include/boost/qvm/lite.hpp -p include -o test/qvm_lite.hpp boost/qvm
 
       - name: Run tests
         run: |
@@ -250,8 +269,8 @@ jobs:
       - name: Generate headers
         run: |
           cd ..\boost-root\libs\qvm
-          python gen/generate_single_header.py -i include/boost/qvm/all.hpp -p include -o test/qvm.hpp boost/qvm
-          python gen/generate_single_header.py -i include/boost/qvm/lite.hpp -p include -o test/qvm_lite.hpp boost/qvm
+          python3 gen/generate_single_header.py -i include/boost/qvm/all.hpp -p include -o test/qvm.hpp boost/qvm
+          python3 gen/generate_single_header.py -i include/boost/qvm/lite.hpp -p include -o test/qvm_lite.hpp boost/qvm
 
       - name: Run tests
         shell: cmd
