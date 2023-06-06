@@ -150,7 +150,7 @@ jobs:
         if: matrix.container
         run: |
           apt-get update
-          apt-get -y install sudo python git g++
+          apt-get -y install sudo python3 git g++
 
       - name: Install packages
         if: matrix.install
